@@ -22,6 +22,10 @@ programator -> se vor sintetiza si se vor crea planuri
 
 - algoritm care sa aleaga pe baza unor inputuri (caracteristici useri) planurile relevante + alternative
 
+Features:
+
+- Abilitatea de a adauga custom meals de catre utilizator pentru a inlocui felurile generate
+
 
 ### User stories:
 
