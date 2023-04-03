@@ -22,17 +22,21 @@ programator -> se vor sintetiza si se vor crea planuri
 
 - algoritm care sa aleaga pe baza unor inputuri (caracteristici useri) planurile relevante + alternative
 
+Features:
+
+- Abilitatea de a adauga custom meals de catre utilizator pentru a inlocui felurile generate
+
 
 ### User stories:
 
 - Fiecare utilizator poate sa isi creeze propriul plan de antrenament si dieta bazate pe datele introduse
 (caracteristici precum varsta, sex, greutate, intaltime, stil de viata, probleme de sanatate etc)
 
-- Planurile de antrenament vor tine cont de exercitiile pe care utilizatorul le poate face, adica va contine alternative
+- Utilizatorul isi va concepe planurile de antrenament - constituie exercitiile pe care utilizatorul le poate face, adica va contine alternative
 si va tine cont daca are la dispozitie echipament sau se va antrena de acasa
 
-- Planurile de dieta vor tine cont de body fat, greutatea actuala si greutatea la care vrem sa ajungem si calculeaza un 
-numar de calorii ca si target zilnic - se vor oferi recomandari ce pot fi regenerate dar care sunt alternative pentru acelasi nr 
+- Utilizatorul isi va concepe planurile de dieta - constituie body fatul, greutatea actuala si greutatea la care vrem sa ajungem si calculeaza un 
+numar de calorii ca si target zilnic + se vor oferi recomandari ce pot fi regenerate dar care sunt alternative pentru acelasi nr 
 de calorii
 
 - Pentru a salva planurile trebuie ca utilizatorii sa aiba un cont activ, adica sa fie inregistrati in baza de date. Acolo se va face
