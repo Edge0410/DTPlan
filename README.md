@@ -10,12 +10,12 @@ mai usor sa isi atinga scopul - pierderea in greutate, cresterea masei musculare
 pentru a salva planurile customizate.
 
 
-La nivelul aplicatiei vor fi necesare functionalitati precum: 
-
-- implementarea unui sistem de logare/inregistrare pentru 
-utilizatori
+La nivelul aplicatiei vor fi necesare functionalitati precum:
 
 - [x] proiectare baza de date pentru sistem de logare si planurile salvate per user
+
+- [x] implementarea unui sistem de logare/inregistrare pentru 
+utilizatori
 
 - analiza asupra tipologiilor umane si a stilurilor de viata si mentinerea unor date/statistici coerente importante pentru
 programator -> se vor sintetiza si se vor crea planuri 
