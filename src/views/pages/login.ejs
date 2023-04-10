@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <%- include("../page_fragments/head.ejs") %>
+    </head>
+
+    <body>
+        <header>
+            <%- include("../page_fragments/header.ejs") %>
+        </header>
+
+        <main>
+            <h3>Login</h3>
+            <div class="centrare_form">
+                <form method="post" action="/login">
+                    <label>
+                        Username
+                        <br/>
+                        <input type="text" name="username" required/>
+                    </label>
+                    <br/>
+                    <label>
+                        Parola
+                        <br/>
+                        <input type="password" name="parola" required/>
+                    </label>
+                    <br/> 
+                    <input type="submit" value="Trimite">
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <%- include("../page_fragments/footer.ejs") %>
+        </footer>
+    </body>
+</html>

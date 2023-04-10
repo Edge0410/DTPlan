@@ -11,17 +11,22 @@ app.use(express.urlencoded({extended:true})); // creeaza req.body pentru formula
 
 app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false})); // req.session
 
-app.get(["/", "/index"], function(req, res){
+app.get(["/", "/index"], function(req, res) {
     res.render("pages/index", {user:req.session.user, found:req.session.found});
-    if(req.session.found == -1)
-    {
+    if(req.session.found == -1) {
         req.session.found = 0;
         req.session.save();
         
     }
 });
 
+app.get(["/login"], function(req, res) {
+    res.render("pages/login");
+});
 
+app.get(["/register"], function(req, res) {
+    res.render("pages/register");
+});
 
 app.listen(8888); 
 console.log("Running...");
