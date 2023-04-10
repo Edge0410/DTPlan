@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended:true})); // creeaza req.body pentru formula
 app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false})); // req.session
 
 app.get(["/", "/index"], function(req, res){
-    res.render("../index", {user:req.session.user, found:req.session.found});
+    res.render("pages/index", {user:req.session.user, found:req.session.found});
     if(req.session.found == -1)
     {
         req.session.found = 0;
@@ -20,7 +20,6 @@ app.get(["/", "/index"], function(req, res){
         
     }
 });
-
 
 
 
