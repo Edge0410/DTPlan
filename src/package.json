@@ -1,12 +1,20 @@
 {
   "name": "dtplan",
   "version": "1.0.0",
-  "description": "Diet & Workout plan maker",
+  "description": "Diet & Workout Plan maker",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "plan de antrenament",
+    "plan de dieta",
+    "exercitii fizice",
+    "stil de viata sanatos",
+    "mancare sanatoasa",
+    "dieta sanatoasa"
+  ],
+  "author": "DTPlan Team",
   "license": "ISC",
   "dependencies": {
     "crypto": "^1.0.1",
