@@ -15,7 +15,7 @@ La nivelul aplicatiei vor fi necesare functionalitati precum:
 - implementarea unui sistem de logare/inregistrare pentru 
 utilizatori
 
-- proiectare baza de date pentru sistem de logare si planurile salvate per user
+- [x] proiectare baza de date pentru sistem de logare si planurile salvate per user
 
 - analiza asupra tipologiilor umane si a stilurilor de viata si mentinerea unor date/statistici coerente importante pentru
 programator -> se vor sintetiza si se vor crea planuri 
