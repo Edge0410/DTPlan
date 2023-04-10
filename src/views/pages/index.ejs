@@ -11,7 +11,9 @@
         </header>
 
         <main>
-
+            <% if(locals.user) { %>
+                <h5>Welcome, <%- locals.user %></h5>
+            <% } %>     
         </main>
 
         <footer>
