@@ -9,7 +9,6 @@ sa ii poata indruma inspre un stil de viata sanatos prin antrenament alaturi de 
 mai usor sa isi atinga scopul - pierderea in greutate, cresterea masei musculare. Utilizatorul poate sa se inregistreze
 pentru a salva planurile customizate.
 
-
 La nivelul aplicatiei vor fi necesare functionalitati precum:
 
 - [x] proiectare baza de date pentru sistem de logare si planurile salvate per user
@@ -26,10 +25,9 @@ Features:
 
 - Abilitatea de a adauga custom meals de catre utilizator pentru a inlocui felurile generate
 
-
 ### User stories:
 
-- Fiecare utilizator poate sa isi creeze propriul plan de antrenament si dieta bazate pe datele introduse
+- Fiecare utilizator poate sa isi creeze propriile planuri de antrenament si dieta bazate pe datele introduse
 (caracteristici precum varsta, sex, greutate, intaltime, stil de viata, probleme de sanatate etc)
 
 - Utilizatorul isi va concepe planurile de antrenament - constituie exercitiile pe care utilizatorul le poate face, adica va contine alternative
@@ -44,7 +42,3 @@ legatura dintre contul lor si planurile salvate
 
 - Utilizatorii pot alege planuri predefinite pentru propriul body type sau sa si-l customizeze in functie de necesitati (sa scoata/adauge
 exercitii, alimente preferate, numarul de antrenamente pe saptamana, numarul de mese pe zi etc)
-
-
-
-
