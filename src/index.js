@@ -22,6 +22,20 @@ app.get(["/", "/index"], function(req, res) {
     }
 });
 
+app.get("/*", function(req, res){
+    res.render("pages"+req.url, {user:req.session.user, found:req.session.found}, function(err, rezrand){
+        if(err){
+            res.render("pages/error404", {user:req.session.user, found:req.session.found}); 
+        }
+        else
+        {
+            res.send(rezrand);
+        }
+    });
+});
+
+
+/*
 app.get(["/login"], function(req, res){
     res.render("pages/login");
 });
@@ -29,6 +43,7 @@ app.get(["/login"], function(req, res){
 app.get(["/register"], function(req, res){
     res.render("pages/register");
 });
+*/
 
 app.post(["/login"], function(req, res){
     console.log(req.body);
