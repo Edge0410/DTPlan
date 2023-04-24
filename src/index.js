@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require('fs');
 const crypto = require('crypto');
+const cors = require('cors')
 const session = require('express-session');
 
 var database = require('./database');
@@ -10,41 +11,52 @@ app.set("view engine", "ejs");
 
 app.use("/assets", express.static(__dirname+"/assets"));
 
+app.use(cors());
+
 app.use(express.urlencoded({extended:true})); // creeaza req.body pentru formular ca sa nu mai fie in url parametrii din post
 
 app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false})); // req.session
 
 app.get(["/", "/index"], function(req, res) {
-    if(req.session.user){
-    database.query(`SELECT * FROM workout_plans`, function(err, result){
-        rez = Object.values(JSON.parse(JSON.stringify(result)));
-        console.log(rez);
-        res.render("pages/index", {user:req.session.user, found:req.session.found, rez});
+        console.log(req.session.userid);
+        res.render("pages/index", {id:req.session.userid, user:req.session.user, found:req.session.found});
         if(req.session.found == -1) {
             req.session.found = 0;
             req.session.save();
-    }
-    });
-}
-    else
-    {
-        res.render("pages/index", {user:req.session.user, found:req.session.found});
-        if(req.session.found == -1) {
-            req.session.found = 0;
-            req.session.save();
-    }
-    }
+        }
 });
 
 app.get("/logout", function(req,res){
     req.session.destroy();
-    res.render("pages/index");
+    res.redirect("/index");
+});
+
+app.get("/fetch-wplans", function (req, res) {
+    query = `
+    SELECT name FROM workout_plans where id = "${req.session.userid}"
+    `
+
+    database.query(query, function(err, resq){
+        if (err){
+            res.json({
+                msg: error,
+                balance: 0,
+              })
+        }
+        else
+        {
+            res.json({
+                msg: 'Data successfully fetched',
+                balance: resq,
+              })
+        }
+    });
 });
 
 app.get("/*", function(req, res){
-    res.render("pages"+req.url, {user:req.session.user, found:req.session.found}, function(err, rezrand){
+    res.render("pages"+req.url, {id:req.session.userid, user:req.session.user, found:req.session.found}, function(err, rezrand){
         if(err){
-            res.render("pages/error404", {user:req.session.user, found:req.session.found}); 
+            res.render("pages/error404", {id:req.session.userid, user:req.session.user, found:req.session.found}); 
         }
         else
         {
@@ -81,6 +93,8 @@ app.post("/login", function(req, res){
             if(resq[0].password == password)
             {
                 req.session.user = user;
+                console.log(resq[0].id);
+                req.session.userid = resq[0].id;
                 req.session.found = 1;
                 res.redirect("/index");
             }
