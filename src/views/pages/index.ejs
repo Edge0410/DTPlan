@@ -11,7 +11,9 @@
         </header>
 
         <main>
-            
+            <% if(locals.user) { %>
+                <%- rez[0].name %>
+            <% } %>    
         </main>
 
         <footer>

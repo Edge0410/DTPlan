@@ -15,10 +15,24 @@ app.use(express.urlencoded({extended:true})); // creeaza req.body pentru formula
 app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false})); // req.session
 
 app.get(["/", "/index"], function(req, res) {
-    res.render("pages/index", {user:req.session.user, found:req.session.found});
-    if(req.session.found == -1) {
-        req.session.found = 0;
-        req.session.save();
+    if(req.session.user){
+    database.query(`SELECT * FROM workout_plans`, function(err, result){
+        rez = Object.values(JSON.parse(JSON.stringify(result)));
+        console.log(rez);
+        res.render("pages/index", {user:req.session.user, found:req.session.found, rez});
+        if(req.session.found == -1) {
+            req.session.found = 0;
+            req.session.save();
+    }
+    });
+}
+    else
+    {
+        res.render("pages/index", {user:req.session.user, found:req.session.found});
+        if(req.session.found == -1) {
+            req.session.found = 0;
+            req.session.save();
+    }
     }
 });
 
