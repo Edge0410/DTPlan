@@ -5,7 +5,10 @@
         <% if(!locals.user) { %>
         <a href="../login">Login</a>
         <a href="../register">Register</a>  
+        <% } else { %>
+        <a href="../logout">Logout</a> 
         <% } %>
+
 </nav>
 
 <% if(locals.user) { %>

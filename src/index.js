@@ -22,6 +22,11 @@ app.get(["/", "/index"], function(req, res) {
     }
 });
 
+app.get("/logout", function(req,res){
+    req.session.destroy();
+    res.render("pages/index");
+});
+
 app.get("/*", function(req, res){
     res.render("pages"+req.url, {user:req.session.user, found:req.session.found}, function(err, rezrand){
         if(err){
@@ -45,7 +50,7 @@ app.get(["/register"], function(req, res){
 });
 */
 
-app.post(["/login"], function(req, res){
+app.post("/login", function(req, res){
     console.log(req.body);
     var user = req.body.username;
     var password = crypto.scryptSync(req.body.password, "iewhrg3yYYDAjert377999", 32).toString('hex');
@@ -79,7 +84,6 @@ app.post(["/login"], function(req, res){
     });
 
     console.log(req.session.user);
-
 });
 
 app.post("/register", function(req, res){
@@ -97,8 +101,8 @@ app.post("/register", function(req, res){
         if (err) throw err;
         console.log(resq.affectedRows);
     });
-    res.redirect("/index");
 
+    res.redirect("/index");
 });
 
 app.listen(8888); 
