@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <%- include("../page_fragments/head.ejs") %>
-    </head>
 
-    <body>
-        <header>
-            <%- include("../page_fragments/header.ejs") %>
-        </header>
-
-        <main>
-            <h3 id="counter"></h3>
-        </main>
-
-        <footer>
-            <%- include("../page_fragments/footer.ejs") %>
-        </footer>
-    </body>
-
+<head>
+    <%- include("../page_fragments/head.ejs") %>
     <script src="/assets/js/script.js"></script>
+</head>
+
+<body>
+    <header>
+        <%- include("../page_fragments/header.ejs") %>
+    </header>
+
+    <main>
+        <div class="container">
+            
+        </div>
+    </main>
+
+    <footer>
+        <%- include("../page_fragments/footer.ejs") %>
+    </footer>
+</body>
+
+<script>
+    $(document).ready(async function () {
+        const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-wplans");
+    });
+</script>
+
 </html>

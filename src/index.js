@@ -33,21 +33,43 @@ app.get("/logout", function(req,res){
 
 app.get("/fetch-wplans", function (req, res) {
     query = `
-    SELECT name FROM workout_plans where id = "${req.session.userid}"
+    SELECT * FROM workout_plans where id = "${req.session.userid}"
     `
 
     database.query(query, function(err, resq){
         if (err){
             res.json({
                 msg: error,
-                balance: 0,
+                records: 0,
               })
         }
         else
         {
             res.json({
                 msg: 'Data successfully fetched',
-                balance: resq,
+                records: resq,
+              })
+        }
+    });
+});
+
+app.get("/fetch-dplans", function (req, res) {
+    query = `
+    SELECT * FROM diet_plans where id = "${req.session.userid}"
+    `
+
+    database.query(query, function(err, resq){
+        if (err){
+            res.json({
+                msg: error,
+                records: 0,
+              })
+        }
+        else
+        {
+            res.json({
+                msg: 'Data successfully fetched',
+                records: resq,
               })
         }
     });
