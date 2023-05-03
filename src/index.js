@@ -75,6 +75,22 @@ app.get("/fetch-dplans", function (req, res) {
     });
 });
 
+app.get("/create-plan", function(req, res){
+    res.render("pages"+req.url, {id:req.session.userid, user:req.session.user, found:req.session.found}, function(err, rezrand){
+        if(err){
+            res.render("pages/error404", {id:req.session.userid, user:req.session.user, found:req.session.found}); 
+        }
+        else if(!req.session.user)
+        {
+            res.redirect("/login"); 
+        }
+        else
+        {
+            res.send(rezrand);
+        }
+    });
+});
+
 app.get("/*", function(req, res){
     res.render("pages"+req.url, {id:req.session.userid, user:req.session.user, found:req.session.found}, function(err, rezrand){
         if(err){
