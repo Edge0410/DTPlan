@@ -136,7 +136,7 @@ app.post("/login", function(req, res){
     console.log(req.session.user);
 });
 
-app.post("/register-completion",function(req,res){
+app.post("/complete-register",function(req,res){
     console.log(req.body);
     var weight = req.body.weight;
     var height = req.body.height;
@@ -184,7 +184,7 @@ app.post("/register", function(req, res){
                 console.log(resq[0].id);
                 req.session.userid = resq[0].id;
                 req.session.found = 1; 
-                res.redirect("/register-completion");          
+                res.redirect("/complete-register");          
     })
 });
 
