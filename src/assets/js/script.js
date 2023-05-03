@@ -8,6 +8,7 @@ function fetchPlans(route) {
               dataType: "json",
               success: function (res) {
                   let container = document.getElementsByClassName("container")[0];
+                  console.log(res.records.length);//1
                   for(let i=0; i<res.records.length; i++){
                       let planChild = document.createElement('div');
                       planChild.classList.add("plan-data");
