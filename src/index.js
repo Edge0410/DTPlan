@@ -33,7 +33,7 @@ app.get("/logout", function(req,res){
 
 app.get("/fetch-wplans", function (req, res) {
     query = `
-    SELECT * FROM workout_plans where id = "${req.session.userid}"
+    SELECT * FROM workout_plans where user_id = "${req.session.userid}"
     `
 
     database.query(query, function(err, resq){
@@ -55,7 +55,7 @@ app.get("/fetch-wplans", function (req, res) {
 
 app.get("/fetch-dplans", function (req, res) {
     query = `
-    SELECT * FROM diet_plans where id = "${req.session.userid}"
+    SELECT * FROM diet_plans where user_id = "${req.session.userid}"
     `
 
     database.query(query, function(err, resq){
