@@ -118,6 +118,7 @@ form > input[type="submit"]{
     color: white;
     border: 1px solid black;
     border-radius: 5px;
+    text-decoration: none;
 }
 
 .plan-button:hover{
