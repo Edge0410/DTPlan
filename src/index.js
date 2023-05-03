@@ -156,14 +156,18 @@ app.post("/complete-register",function(req,res){
     var weight = req.body.weight;
     var height = req.body.height;
     var gender = req.body.gender;
+    var birth_date = new String(req.body.birthday);
+    console.log(birth_date);
     var intgender;
     if(gender == "male")
         intgender = 1;
     else
         intgender = 0;
+
+
     query = `UPDATE users 
-    set weight = ${weight}, height = ${height}, gender = ${intgender}
-    where id = ${req.session.userid}`
+    set weight = ${weight}, height = ${height}, gender = ${intgender}, birth_date = STR_TO_DATE('${birth_date}', '%Y-%m-%d')
+    where id = ${req.session.userid};`
 
     database.query(query, function(err, resq){
         if (err) throw err;
