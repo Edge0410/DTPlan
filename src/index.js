@@ -136,12 +136,34 @@ app.post("/login", function(req, res){
     console.log(req.session.user);
 });
 
+app.post("/register-completion",function(req,res){
+    console.log(req.body);
+    var weight = req.body.weight;
+    var height = req.body.height;
+    var gender = req.body.gender;
+    var intgender;
+    if(gender == "male")
+        intgender = 1;
+    else
+        intgender = 0;
+    query = `UPDATE users 
+    set weight = ${weight}, height = ${height}, gender = ${intgender}
+    where id = ${req.session.userid}`
+
+    database.query(query, function(err, resq){
+        if (err) throw err;
+        console.log(resq.affectedRows);
+    });
+
+    res.redirect("/index");
+})
+
 app.post("/register", function(req, res){
     console.log(req.body);
     var user = req.body.username;
     var email = req.body.email;
     var encpass = crypto.scryptSync(req.body.password, "iewhrg3yYYDAjert377999", 32).toString('hex');
-
+    
     query = `
     INSERT INTO users (username, email, password)
     values ("${user}", "${email}", "${encpass}")
@@ -152,7 +174,18 @@ app.post("/register", function(req, res){
         console.log(resq.affectedRows);
     });
 
-    res.redirect("/index");
+    query2 = `
+    SELECT * FROM users
+    where username = "${user}"
+    `;
+
+    database.query(query2, function(err, resq){
+                req.session.user = user;
+                console.log(resq[0].id);
+                req.session.userid = resq[0].id;
+                req.session.found = 1; 
+                res.redirect("/register-completion");          
+    })
 });
 
 app.listen(8888); 

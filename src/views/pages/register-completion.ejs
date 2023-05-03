@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <%- include("../page_fragments/head.ejs") %>
+    </head>
+
+    <body>
+        <header>
+            <%- include("../page_fragments/header.ejs") %>
+        </header>
+
+        <main>
+            <h3 class="centered">Register</h3>
+            <div class="centered">
+                <form method="post" action="/register-completion">
+                    <label>
+                        Greutate (in Kg)
+                        <br/>
+                        <input type="text" name="weight" required/>
+                    </label>
+                    <br/>
+                    <label>
+                        Inaltime (in cm)
+                        <br/>
+                        <input type="text" name="height" required/>
+                    </label>
+                    <br/> 
+                    <label>
+                        <br/>
+                        <label for="gender"> Sex: </label>
+                            <select name="gender">
+                                <option value="male" selected>Barbat</option>
+                                <option value="female">Femeie</option>
+                            </select>
+                    </label>
+                    <br/>
+                    <input type="submit" value="Trimite">
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <%- include("../page_fragments/footer.ejs") %>
+        </footer>
+    </body>
+</html>
