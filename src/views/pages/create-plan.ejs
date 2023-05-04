@@ -13,11 +13,11 @@
         <main>
             <div class="centered">
                 <h3 class="centered">Select plan type:</h6>
-                <select id="plan-type" name="plan-type" form="create-plan-form">
-                    <option value="diet">Diet plan</option>
-                    <option value="workout">Workout plan</option>
+                <select id="ptype" name="ptype" form="create-plan-form">
+                    <option value="0">Diet plan</option>
+                    <option value="1">Workout plan</option>
                 </select>
-                <form method="post" id="create-plan-form" action="/create-meal-plan">
+                <form method="post" id="create-plan-form" action="/create-plan">
                     <label>
                         Height (in cm)
                         <br/>
@@ -33,21 +33,21 @@
                     <label>
                         Age
                         <br/>
-                        <input type="number" name="weight" value="20" required/>
+                        <input type="number" name="age" value="20" required/>
                     </label>
                     <br/> 
                     <h3 class="centered">What is your daily routine?</h6>
                         <select id="routine" name="routine" form="create-plan-form">
-                            <option value="sedentary">I am a sedentary person and I rarely go for walks</option>
-                            <option value="mild-sedentary">Sometimes I enjoy walks but I am not really into sports</option>
-                            <option value="mild-sportive">I love playing sports but I am a bit out of shape</option>
-                            <option value="sportive">I always make time for gym and I am actively involved into the sport life</option>  
+                            <option value="0">I am a sedentary person and I rarely go for walks</option>
+                            <option value="1">Sometimes I enjoy walks but I am not really into sports</option>
+                            <option value="2">I love playing sports but I am a bit out of shape</option>
+                            <option value="3">I always make time for gym and I am actively involved into the sport life</option>  
                         </select>
                     </br>
                     <h3 class="centered">What is your ultimate goal?</h6>
                         <select id="goal" name="goal" form="create-plan-form">
-                            <option value="gain">Gain weight & muscle mass</option>
-                            <option value="lose">Lose weight & maintain a healthy diet</option>  
+                            <option value="0">Lose weight & maintain a healthy diet</option>  
+                            <option value="1">Gain weight & muscle mass</option>
                         </select>
                     </br>
                     <input type="submit" value="Trimite">

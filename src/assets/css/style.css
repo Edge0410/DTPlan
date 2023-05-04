@@ -20,13 +20,13 @@ header{
     padding-bottom: 15px;
 }
 
-footer{
-    position: absolute;
-    bottom: 0;
+footer {
     width: 100%;
-    height: 60px;   /* Height of the footer */
+    height: 60px;
+    display: flex; /* create a flexbox layout */
+    align-items: center; /* center the text vertically */
     color: blue;
-}
+  }
 
 
 h1 {
@@ -63,7 +63,7 @@ form{
     padding: 10px;
 }
 
-form > input[type="submit"]{
+form > input[type="submit"], form button[type="submit"]{
     color: blue;
     cursor: pointer;
     font-weight: bold;
@@ -88,6 +88,7 @@ form > input[type="submit"]{
     margin: auto;
     justify-content: center;
     align-items: center;
+    text-align: center;
     flex-direction: column;
     border-radius: 24px;
     color: white;
@@ -125,4 +126,77 @@ form > input[type="submit"]{
     color: black;
     background-color: white;
     font-weight: bold;
+}
+
+.diet-data
+{
+    display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    width: 150px;
+    height: 100px;
+    padding: 5px;
+    background-image: url(../images/data-diet.jpg);
+    background-size: 100% 100%;
+    transition: all 0.2s;
+}
+
+.container .diet-data:nth-child(3n+1)
+{
+    background-image: url(../images/data-diet2.jpg)
+}
+
+.container .diet-data:nth-child(3n+2)
+{
+    background-image: url(../images/data-diet3.jpg)
+}
+
+.diet-data:hover{
+    box-shadow: 4px 4px 4px 0 gray; 
+    transform: scale(1.05);
+}
+
+.workout-data
+{
+    display: flex;
+    margin: auto;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 25px;
+    text-align: center;
+    color: white;
+    width: 250px;
+    height: 150px;
+    padding: 5px;
+    background-image: url(../images/plan-muscle3.jpg);
+    background-size: 100% 100%;
+    transition: all 0.2s;
+}
+
+.container .workout-data:nth-child(3n+1)
+{
+    background-image: url(../images/plan-muscle4.jpg)
+}
+
+.container .workout-data:nth-child(3n+2)
+{
+    background-image: url(../images/plan-muscle5.jpg)
+}
+
+.workout-data:hover{
+    box-shadow: 4px 4px 4px 0 gray; 
+    transform: scale(1.05);
+}
+
+.diet-desc{
+    display: block;
+    flex-grow: 6;
 }

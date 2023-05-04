@@ -11,6 +11,9 @@
         </header>
 
         <main>
+            <% if(locals.user){ %>
+            <h3 class="centered"> Esti deja logat!</h3>
+            <% } else { %>
             <h3 class="centered">Login</h3>
             <div class="centered">
                 <form method="post" action="/login">
@@ -29,6 +32,8 @@
                     <input type="submit" value="Trimite">
                 </form>
             </div>
+
+            <% } %>
         </main>
 
         <footer>

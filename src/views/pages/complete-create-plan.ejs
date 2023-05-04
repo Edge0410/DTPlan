@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <%- include("../page_fragments/head.ejs") %>
+        <script src="/assets/js/script.js"></script>
+    </head>
+
+    <body>
+        <header>
+            <%- include("../page_fragments/header.ejs") %>
+        </header>
+
+        <main>
+        
+        <!--<% if(locals.plancacheid){ %>
+        <h3>test cache id</h3>
+        <% } %>-->    
+        
+        <div class="container" style="flex-direction: column;">
+            
+        </div>
+
+        <form action="/update-created-plan" id="update-created-plan" class="centered" method="post">
+            <label for="username">
+              <b>Enter a name for your plan:</b>
+              <br>
+              <input type="text" name="name" id="name" placeholder="Super Mega Nice Plan" required> <!-- make this required -->
+            </label>
+            <br>
+            <label for="description">
+              <b>Enter a short description for your plan:</b>
+              <br>
+              <textarea name="description" id="description" placeholder="Bulking plan for the future!" required></textarea> <!-- make this required -->
+            </label>
+            <br>
+            <button type="submit" name="submit" value="1">Finish plan</button><br>
+            <button type="submit" name="submit" value="0" onclick="removeValidation()">
+              Remove plan
+            </button>
+          </form>
+        
+
+
+        </main>
+
+        <footer>
+            <%- include("../page_fragments/footer.ejs") %>
+        </footer>
+    </body>
+
+    <script>
+        $(document).ready(async function () {
+            const retrieve_bal = await fetchPlanContent("http://localhost:8888/fetch-cache-plan");
+        });
+    </script>
+</html>
