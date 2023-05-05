@@ -7,7 +7,7 @@ function fetchPlans(route) {
               type: "GET",
               dataType: "json",
               success: function (res) {
-                  let container = document.getElementsByClassName("container")[0];
+                  let container = document.getElementsByClassName("container-plans")[0];
                   console.log(res.records.length);//1
                   for(let i=0; i<res.records.length; i++){
                       let planChild = document.createElement('div');
@@ -27,6 +27,12 @@ function fetchPlans(route) {
                       planChild.appendChild(childButton);
                       container.appendChild(planChild);
                   }
+                  if(res.records.length > 3)
+                  {
+                  buttonleft.style.display = "block";
+                  buttonright.style.display = "block";
+                  container.style.justifyContent = "initial";
+                    }
               },
           });
           resolve('updated plan list');

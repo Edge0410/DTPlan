@@ -71,7 +71,13 @@ form > input[type="submit"], form button[type="submit"]{
     outline: 0;
     padding: 10px;
     margin-top: 10px;
-    border-radius: 2px;
+    border-radius: 6px;
+    transition: all 0.15s;
+}
+
+form button[type="submit"]:hover{
+    background-color: blue;
+    color: white;
 }
 
 /* plan data on view plans */
@@ -80,18 +86,36 @@ form > input[type="submit"], form button[type="submit"]{
 {
     display: flex;
     margin: auto;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+
+.container-plans{
+    display: flex;
+    align-items: center;
+    width: 780px;
+    height: 400px;
+    overflow: scroll;
+    justify-content: center;
+}
+
+.container-plans::-webkit-scrollbar{
+    display: none;
 }
 
 .plan-data
 {
     display: flex;
-    margin: auto;
     justify-content: center;
+    margin: 10px;
     align-items: center;
     text-align: center;
     flex-direction: column;
     border-radius: 24px;
     color: white;
+    min-width: 200px;
     width: 200px;
     height: 300px;
     padding: 20px;
@@ -102,13 +126,22 @@ form > input[type="submit"], form button[type="submit"]{
 
 .plan-data:hover{
     box-shadow: 4px 4px 4px 0 gray; 
-    transform: scale(1.05);
 }
-
 
 .plan-desc{
     display: block;
     flex-grow: 6;
+}
+
+#left-plan, #right-plan{
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+    text-decoration: none;
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 100px;
 }
 
 .plan-button
@@ -199,4 +232,12 @@ form > input[type="submit"], form button[type="submit"]{
 .diet-desc{
     display: block;
     flex-grow: 6;
+}
+
+button.plan-submit-button[value="0"]{
+    color: red;
+}
+
+button.plan-submit-button[value="1"]{
+    color: green;
 }

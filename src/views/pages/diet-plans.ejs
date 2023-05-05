@@ -13,7 +13,11 @@
 
         <main>
             <div class="container">
+                <button id="left-plan">&#8249;</button>
+                <div class="container-plans">
 
+                </div>
+                <button id="right-plan">&#8250;</button>
             </div>
         </main>
 
@@ -23,8 +27,39 @@
     </body>
 
     <script>
+
+
 $(document).ready(async function () {
         const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-dplans");
+    });
+
+    $('.container-plans').on('scroll mousewheel touchmove', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+});
+
+    const buttonleft = document.getElementById("left-plan");
+    const buttonright = document.getElementById("right-plan");
+
+    buttonleft.addEventListener("click", function(){
+        container = document.getElementsByClassName("container-plans")[0];
+        scrl = container.scrollLeft;
+        console.log(scrl);
+        container.scrollBy({
+        left: -260,
+        behavior: "smooth",
+});
+    });
+
+    buttonright.addEventListener("click", function(){
+        container = document.getElementsByClassName("container-plans")[0];
+        scrl = container.scrollLeft;
+        console.log(scrl);
+        container.scrollBy({
+        left: 260,
+        behavior: "smooth",
+});
     });
     </script>
 </html>
