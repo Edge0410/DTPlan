@@ -288,7 +288,7 @@ app.post("/create-plan", function (req, res) {
                 query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
 
                 /* algoritm */
-
+                
                 database.query(query, function (err, resq) {
                     if (err) throw err;
                     else {
