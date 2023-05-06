@@ -8,10 +8,12 @@ function fetchPlans(route) {
               dataType: "json",
               success: function (res) {
                   let container = document.getElementsByClassName("container")[0];
+                  let swiperWrapper = document.getElementsByClassName("swiper-wrapper")[0];
                   console.log(res.records.length);//1
-                  for(let i=0; i<res.records.length; i++){
+                  for(let i=0; i<res.records.length - 1; i++){
                       let planChild = document.createElement('div');
                       planChild.classList.add("plan-data");
+                      planChild.classList.add("swiper-slide");
                       let childTitle = document.createElement('h3');
                       childTitle.classList.add("plan-title");
                       let childDesc = document.createElement('span');
@@ -25,8 +27,50 @@ function fetchPlans(route) {
                       planChild.appendChild(childTitle);
                       planChild.appendChild(childDesc);
                       planChild.appendChild(childButton);
-                      container.appendChild(planChild);
+                      swiperWrapper.appendChild(planChild);
                   }
+
+                  var mySwiper = new Swiper('.container', {
+                    slidesPerView : 2,
+                    centeredSlides : true,
+                    longSwipes: false,
+                    effect: "coverflow",
+                    grabCursor: true,
+                    centeredSlides: true,
+                    coverflowEffect: {
+                      rotate: 0,
+                      stretch: 0,
+                      depth: 100,
+                      modifier: 3,
+                      slideShadows: true
+                    },
+                    pagination: {
+                      el: ".swiper-pagination",
+                      clickable: true
+                    },
+                    breakpoints: {
+                      640: {
+                        slidesPerView: 2
+                      },
+                      768: {
+                        slidesPerView: 1
+                      },
+                      1024: {
+                        slidesPerView: 2
+                      },
+                      1560: {
+                        slidesPerView: 3
+                      }
+                    },
+                    pagination: {
+                      el: '.swiper-pagination',
+                      clickable: true,
+                    },
+                    navigation: {
+                      nextEl: '.swiper-button-next',
+                      prevEl: '.swiper-button-prev',
+                    },
+                  });
               },
           });
           resolve('updated plan list');
