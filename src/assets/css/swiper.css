@@ -1,4 +1,4 @@
-.container {
+.swiper-container {
    width: 800px;
    height: 400px;
    position: absolute;
@@ -6,6 +6,15 @@
    top: 50%;
    transform: translate(-50%, -50%);
    padding: 10px;
+
+   /*
+   display: flex;
+    margin: auto;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    */
  }
  
  .swiper-slide {

@@ -13,6 +13,7 @@ body{
     min-height: 800px;
     position: relative;
     margin: 0;
+    overflow-x: hidden;
 }
 
 header{
@@ -115,7 +116,7 @@ form button[type="submit"]:hover{
 {
     display: flex;
     justify-content: center;
-    margin: 10px;
+    /*margin: 10px;*/
     align-items: center;
     text-align: center;
     flex-direction: column;
@@ -124,7 +125,7 @@ form button[type="submit"]:hover{
     min-width: 200px;
     width: 200px;
     height: 300px;
-    padding: 20px;
+    /*padding: 20px;*/
     background-image: url(../images/plan-muscle.jpg);
     background-size: 100% 100%;
     transition: all 0.2s;

@@ -7,10 +7,10 @@ function fetchPlans(route) {
               type: "GET",
               dataType: "json",
               success: function (res) {
-                  let container = document.getElementsByClassName("container")[0];
+                  let container = document.getElementsByClassName("swiper-container")[0];
                   let swiperWrapper = document.getElementsByClassName("swiper-wrapper")[0];
                   console.log(res.records.length);//1
-                  for(let i=0; i<res.records.length - 1; i++){
+                  for(let i=0; i<res.records.length; i++){
                       let planChild = document.createElement('div');
                       planChild.classList.add("plan-data");
                       planChild.classList.add("swiper-slide");
@@ -33,7 +33,7 @@ function fetchPlans(route) {
                       swiperWrapper.appendChild(planChild);
                   }
 
-                  var mySwiper = new Swiper('.container', {
+                  var mySwiper = new Swiper('.swiper-container', {
                     slidesPerView : 2,
                     centeredSlides : true,
                     longSwipes: false,
