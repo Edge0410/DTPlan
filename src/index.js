@@ -6,6 +6,7 @@ const session = require('express-session');
 const url = require('url');
 
 var database = require('./database');
+const { parse } = require('path');
 
 app = express();
 app.set("view engine", "ejs");
@@ -294,15 +295,63 @@ app.post("/register", function (req, res) {
     })
 });
 
-app.post("/create-plan", function (req, res) {
+app.post("/create-plan", async function (req, res) {
     console.log(req.body);
+    
     var ptype = req.body.ptype;
     var height = req.body.height;
     var weight = req.body.weight;
     var age = req.body.age;
     var routine = req.body.routine;
     var goal = req.body.goal;
+    console.log("id:" + req.session.userid);
+    var gender = await new Promise((resolve, reject) => {
+        const query = "SELECT gender from users where id = " + req.session.userid;
+        database.query(query, function (err, res) {
+          if (err) reject(err);
+          else resolve(res[0].gender);
+        });
+      });
+    
+    console.log("Gender: " + gender);
     var inserted_id;
+
+    //age = 1 - age;
+    height = height / 100;
+    let BMI = weight / (height * height);
+    console.log("BMI: " + BMI);
+    //Transform age and gender into int:
+    let BFI = 1.2 * BMI + 0.23 * age - 10.8 * gender - 5.4;
+    console.log("BFI: " + BFI);            
+    // Underweight: BMI < 18.5
+    // Normal weight: 18.5 ≤ BMI < 24.9
+    // Overweight: 25 ≤ BMI < 29.9
+    // Obese: BMI ≥ 30
+
+    // Essential Fat:
+    // Men: 2-5%
+    // Women: 10-13%
+
+    // Athletes:
+    // Men: 6-13%
+    // Women: 14-20%
+
+    // Fit:
+    // Men: 14-17%
+    // Women: 21-24%
+
+    // Acceptable:
+    // Men: 18-24%
+    // Women: 25-31%
+
+    // Overweight/Obese:
+    // Men: 25% and above
+    // Women: 32% and above
+                
+    let optimum_BMI = 20;
+    //Optim pt baieti: 15, optim pt fete: 22
+    let optimum_BFI = gender === 1 ? 15 : 22;
+                
 
     if (ptype == 0) { // avem diet plan
         queryCreatePlan = `INSERT INTO diet_plans (name, description, user_id) values ("", "", ${req.session.userid})`;
@@ -332,8 +381,9 @@ app.post("/create-plan", function (req, res) {
     }
     else
     {
+        console.log("Workout");
         queryCreatePlan = `INSERT INTO workout_plans (name, description, user_id) values ("", "", ${req.session.userid})`;
-        database.query(queryCreatePlan, function (err, resq) {
+        database.query(queryCreatePlan, await function (err, resq) {
             if (err) {
                 throw err;
             } else {
@@ -342,17 +392,164 @@ app.post("/create-plan", function (req, res) {
                 req.session.planType = ptype;
                 console.log(inserted_id);
                 /* algoritm */
-
-                query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
-
-                /* algoritm */
                 
-                database.query(query, function (err, resq) {
-                    if (err) throw err;
-                    else {
-                        res.redirect("/complete-create-plan");
-                    }
-                });
+                let diff_BMI = Math.abs(BMI - optimum_BMI);
+                let diff_BFI = Math.abs(BFI - optimum_BFI);
+
+                let target_score_cardio = target_score_muscle = (5 * (diff_BMI + diff_BFI)) / 2;
+                console.log("Target score cardio: " + target_score_cardio);
+                console.log("Target score muscle: " + target_score_muscle);
+                if(goal == 0) //slabire
+                {
+                    target_score_muscle /= 2;
+                    console.log("Cardio");
+                }
+                else{
+                    target_score_cardio /= 2;
+                    console.log("Muscle");
+                }
+
+                let max_intensity_score;
+                switch(routine)
+                {
+                    case '3': // Active
+                    max_intensity_score = 10;
+                    break;
+                  case '2': // Mild Active
+                    max_intensity_score = 9;
+                    break;
+                  case '1': // Mild Sedentary
+                    max_intensity_score = 7;
+                    break;
+                  case '0': // Sedentary
+                    max_intensity_score = 5;
+                    break;
+                }    
+                console.log(max_intensity_score);
+                console.log("BMI: " + BMI);
+                console.log("BFI: " + BFI);
+
+                //Array-ul de exercitii
+                const getExercices = () => {
+                    return new Promise((resolve, reject) => {
+                        const query = "SELECT * from exercises";
+                        database.query(query, function (err, res) {
+                            if (err) reject(err);
+                            else resolve(res);
+                          });
+                        });
+                      };
+
+                
+                getExercices().then(exercises => {
+                        const muscle_exercises = exercises.filter((ex) => ex.index_resistance <= max_intensity_score).sort((a, b) => b.index_resistance - a.index_resistance);
+                        const cardio_exercises = exercises.filter((ex) => ex.index_cardio <= max_intensity_score).sort((a, b) => b.index_cardio - a.index_cardio);
+                        
+                        var n;
+                        var dp;
+                        //selected_type = "cardio"
+                        target_score_cardio = Math.floor(target_score_cardio * 10);
+                        target_score_muscle = Math.floor(target_score_muscle * 10);
+                        
+                        if(goal == 0)
+                        {
+                            n = cardio_exercises.length;
+                            const results = {};
+                            results[0] = {exercices: [], sum : 0};
+
+                            for(const ex of cardio_exercises)
+                            {
+                                for(let i = target_score_cardio; i >= ex.index_cardio; i--)
+                                {
+                                    if(results[i - ex.index_cardio] != null)
+                                    {
+                                        const sum = results[i - ex.index_cardio].sum + ex.index_cardio;
+                                        if(results[i] == null || results[i].sum < sum)
+                                        {
+                                            results[i] = {exercices: [...results[i - ex.index_cardio].exercices, ex], sum};
+                                        }
+                                    }
+                                }
+                            }
+
+                            for(ex of results[target_score_cardio].exercices)
+                            {
+                                console.log(ex.title);
+                                console.log(ex.index_cardio);
+                                console.log(ex.index_resistance);
+                            }
+
+                            //Inseram exercitiile in baza de date:
+                            query = "INSERT INTO workout_exercises VALUES ";
+                            for(ex of results[target_score_cardio].exercices)
+                            {
+                                query += `(${inserted_id}, ${ex.id}), `;
+                            }
+                            query = query.substring(0, query.length - 2);
+                            query += ";";
+                            //query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
+                
+                            /* algoritm */
+                
+                            database.query(query, function (err, resq) {
+                            if (err) throw err;
+                            else {
+                                res.redirect("/complete-create-plan");
+                            }
+                            });
+                        }
+                        //selected_type = "muscle"
+                        else{
+
+                            n = muscle_exercises.length;
+                            const results = {};
+                            results[0] = {exercices: [], sum : 0};
+
+                            for(const ex of muscle_exercises)
+                            {
+                                for(let i = target_score_muscle; i >= ex.index_resistance; i--)
+                                {
+                                    if(results[i - ex.index_resistance] != null)
+                                    {
+                                        const sum = results[i - ex.index_resistance].sum + ex.index_resistance;
+                                        if(results[i] == null || results[i].sum < sum)
+                                        {
+                                            results[i] = {exercices: [...results[i - ex.index_resistance].exercices, ex], sum};
+                                        }
+                                    }
+                                }
+                            }
+
+                            for(ex of results[target_score_muscle].exercices)
+                            {
+                                console.log(ex.title);
+                                console.log(ex.index_cardio);
+                                console.log(ex.index_resistance);
+                            }
+
+                            //Inseram exercitiile in baza de date:
+                            query = "INSERT INTO workout_exercises VALUES ";
+                            for(ex of results[target_score_muscle].exercices)
+                            {
+                                query += `(${inserted_id}, ${ex.id}), `;
+                            }
+                            query = query.substring(0, query.length - 2);
+                            query += ";";
+                            //query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
+                
+                            /* algoritm */
+                
+                            database.query(query, function (err, resq) {
+                            if (err) throw err;
+                            else {
+                                res.redirect("/complete-create-plan");
+                            }
+                            });
+
+                        }
+                      }).catch(err => {
+                        console.error(err);
+                      });
             }
         })
     }
