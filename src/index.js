@@ -3,6 +3,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 const cors = require('cors')
 const session = require('express-session');
+const url = require('url');
 
 var database = require('./database');
 
@@ -68,6 +69,63 @@ app.get("/fetch-dplans", function (req, res) {
             res.json({
                 msg: 'Data successfully fetched',
                 records: resq,
+            })
+        }
+    });
+});
+
+app.get("/view-diet-plan", function(req, res){
+    let plan_id = req.query.id;
+    res.set('Cache-Control', 'no-store, no-cache');
+    res.render("pages" + url.parse(req.url).pathname, { id: req.session.userid, user: req.session.user, found: req.session.found }, function (err, rezrand) {
+        if (err) {
+            res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+        }
+        else if (!req.session.user) {
+            res.redirect("/login");
+        }
+        else { // trebuie sa verific daca planul inclus in query string imi apartine ca sa nu pot accesa orice plan
+            query = `SELECT user_id from diet_plans where id = ${plan_id}`;
+            database.query(query, function(err, resq){
+                if(err || resq.length == 0){
+                    res.redirect("/error404");
+                }
+                else
+                {
+                    if(resq[0].user_id == req.session.userid)
+                        res.send(rezrand);
+                    else
+                        res.redirect("/error404");
+                }
+            })
+        }
+    });
+});
+
+app.get("/view-workout-plan", function(req, res){
+    let plan_id = req.query.id;
+    res.set('Cache-Control', 'no-store, no-cache');
+    res.render("pages" + url.parse(req.url).pathname, { id: req.session.userid, user: req.session.user, found: req.session.found }, function (err, rezrand) {
+        if (err) {
+            console.log(err);
+            res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+        }
+        else if (!req.session.user) {
+            res.redirect("/login");
+        }
+        else { // trebuie sa verific daca planul inclus in query string imi apartine ca sa nu pot accesa orice plan
+            query = `SELECT user_id from workout_plans where id = ${plan_id}`;
+            database.query(query, function(err, resq){
+                if(err || resq.length == 0){
+                    res.redirect("/error404");
+                }
+                else
+                {
+                    if(resq[0].user_id == req.session.userid)
+                        res.send(rezrand);
+                    else
+                        res.redirect("/error404");
+                }
             })
         }
     });

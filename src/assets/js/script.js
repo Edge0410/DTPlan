@@ -21,7 +21,10 @@ function fetchPlans(route) {
                       childTitle.innerHTML = res.records[i].name;
                       childDesc.innerHTML = res.records[i].description;
                       childButton.innerHTML = "Go to plan";
-                      childButton.href = "#";
+                      if(route.includes("dplans"))
+                        childButton.href = "view-diet-plan?id=" + res.records[i].id;
+                       else
+                       childButton.href = "view-workout-plan?id=" + res.records[i].id;  
                       planChild.appendChild(childTitle);
                       planChild.appendChild(childDesc);
                       planChild.appendChild(childButton);
