@@ -373,6 +373,7 @@ app.post("/create-plan", async function (req, res) {
     var inserted_id;
 
     //age = 1 - age;
+    //Height in m:
     height = height / 100;
     let BMI = weight / (height * height);
     console.log("BMI: " + BMI);
@@ -420,20 +421,113 @@ app.post("/create-plan", async function (req, res) {
                 req.session.planType = ptype;
                 console.log(inserted_id);
                 /* algoritm */
-
+                let diff_BMI = Math.abs(BMI - optimum_BMI);
+                let diff_BFI = Math.abs(BFI - optimum_BFI);
+                let BMR;
+                if(gender == 1) //height in cm and age in years
+                    BMR = 66.5 + (13.75 * weight) + (5.003 * height * 100) - (6.755 * age);
+                else
+                    BMR = 655.1 + (9.563 * weight) + (1.850 * height * 100) - (4.676 * age);
+                console.log("BMR: " + BMR);
+               
+                let caloric_intake;
+                switch (routine) {
+                    case '3': // Active
+                        caloric_intake = BMR * 1.725;
+                        break;
+                    case '2': // Mild Active
+                        caloric_intake = BMR * 1.55;
+                        break;
+                    case '1': // Mild Sedentary
+                        caloric_intake = BMR * 1.375;
+                        break;
+                    case '0': // Sedentary
+                        caloric_intake = BMR * 1.2;
+                        break;
+                }
+                caloric_intake = Math.round(caloric_intake);
+                console.log("Caloric intake: " + caloric_intake);
                 query = `INSERT INTO diet_meals VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
 
                 /* algoritm */
 
-                database.query(query, function (err, resq) {
-                    if (err) 
-                        res.redirect("error404");
-                    else {
-                        res.redirect("/complete-create-plan");
-                    }
-                });
+                const getMeals = () => {
+                    return new Promise((resolve, reject) => {
+                        const query = "SELECT * from meals";
+                        database.query(query, function (err, res) {
+                            if (err) reject(err);
+                            else resolve(res);
+                          });
+                        });
+                      };
+
+                
+                getMeals().then(meals => {
+                        const convenient_meals = meals.filter(meal => meal.calories <= caloric_intake);
+                        var n = convenient_meals.length;
+                        var table = Array.from(Array(n + 1), () => Array(caloric_intake + 1).fill(0));
+                        const selectedFoods = [];
+                        //selected_type = "cardio"
+                        
+                        if(goal == 0)
+                        {
+                            //scadem caloriile
+                            caloric_intake -= 0.10 * caloric_intake;
+                    
+                        }
+                        else{
+                            //modificam caloriile
+                            caloric_intake += 0.15 * caloric_intake;
+                        }
+                        caloric_intake = Math.round(caloric_intake);
+                        console.log("Caloric intake: " + caloric_intake);
+                        for (let i = 1; i <= n; i++) {
+                            const food = convenient_meals[i - 1];
+                            for (let j = 1; j <= caloric_intake; j++) {
+                              if (food.calories <= j) {
+                                const newValue = food.calories + table[i - 1][j - food.calories];
+                                if (newValue > table[i - 1][j]) {
+                                  table[i][j] = newValue;
+                                  selectedFoods[j] = [food].concat(selectedFoods[j - food.calories]);
+                                } else {
+                                  table[i][j] = table[i - 1][j];
+                                  selectedFoods[j] = selectedFoods[j] || selectedFoods[j - 1];
+                                }
+                              } else {
+                                table[i][j] = table[i - 1][j];
+                                selectedFoods[j] = selectedFoods[j] || selectedFoods[j - 1];
+                              }
+                            }
+                          }
+                          var sum = 0;
+                          for(var i = 0; i < selectedFoods[caloric_intake].length - 1; i++)
+                          {
+                            console.log(selectedFoods[caloric_intake][i].title);
+                            sum += selectedFoods[caloric_intake][i].calories;
+                          }
+                          console.log("Total calories: " + sum);
+                          
+                        //Inseram mealurile in baza de date:
+                        query = "INSERT INTO diet_meals VALUES ";
+                        for(var meal of selectedFoods[caloric_intake].slice(0, -1))
+                        {
+                            query += `(${inserted_id}, ${meal.id}), `;
+                        }
+                        query = query.substring(0, query.length - 2);
+                        query += ";";
+                        //query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
+
+                        /* algoritm */
+            
+                        database.query(query, function (err, resq) {
+                        if (err) throw err;
+                        else {
+                            res.redirect("/complete-create-plan");
+                        }
+                        });
+                    })
             }
-        })
+        });
     }
     else
     {
