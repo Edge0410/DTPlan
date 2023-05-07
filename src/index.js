@@ -93,11 +93,39 @@ app.get("/view-diet-plan", function(req, res){
                 }
                 else
                 {
-                    if(resq[0].user_id == req.session.userid)
+                    if(resq[0].user_id == req.session.userid){
+                        req.session.plancacheid = plan_id;
+                        console.log("id: " + req.session.plancacheid);
                         res.send(rezrand);
+                    }
                     else
                         res.redirect("/error404");
                 }
+            })
+        }
+    });
+});
+
+app.get("/view-diet-plan/data", function (req, res) {
+    let plan_id = req.session.plancacheid;
+    console.log("id: " + plan_id);
+    query = `
+    SELECT * FROM diet_plans dp join diet_meals dm on dp.id = dm.id_diet join meals m on dm.id_meals = m.id where dp.id = "${plan_id}"
+    `
+    req.session.plancacheid = null;
+    database.query(query, function (err, resq) {
+        if (err) {
+            res.json({
+                msg: err,
+                type: undefined,
+                records: 0,
+            })
+        }
+        else {
+            res.json({
+                msg: 'Data successfully fetched',
+                type: 0,
+                records: resq,
             })
         }
     });
@@ -122,11 +150,39 @@ app.get("/view-workout-plan", function(req, res){
                 }
                 else
                 {
-                    if(resq[0].user_id == req.session.userid)
+                    if(resq[0].user_id == req.session.userid){
+                        req.session.plancacheid = plan_id;
+                        console.log("id: " + req.session.plancacheid);
                         res.send(rezrand);
+                    }
                     else
                         res.redirect("/error404");
                 }
+            })
+        }
+    });
+});
+
+app.get("/view-workout-plan/data", function (req, res) {
+    let plan_id = req.session.plancacheid;
+    console.log("id: " + plan_id);
+    query = `
+    SELECT * FROM workout_plans dp join workout_exercises dm on dp.id = dm.id_workout join exercises m on dm.id_exercises = m.id where dp.id = "${plan_id}"
+    `
+    req.session.plancacheid = null;
+    database.query(query, function (err, resq) {
+        if (err) {
+            res.json({
+                msg: err,
+                type: undefined,
+                records: 0,
+            })
+        }
+        else {
+            res.json({
+                msg: 'Data successfully fetched',
+                type: 1,
+                records: resq,
             })
         }
     });
