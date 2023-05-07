@@ -3,6 +3,7 @@
 <html>
     <head>
         <%- include("../page_fragments/head.ejs") %>
+        <script src="/assets/js/script.js"></script>
     </head>
 
     <body>
@@ -11,11 +12,18 @@
         </header>
 
         <main>
+        <div class="container" style="flex-direction: column;">
             
+        </div>    
         </main>
 
         <footer>
             <%- include("../page_fragments/footer.ejs") %>
         </footer>
     </body>
+    <script>
+        $(document).ready(async function () {
+            const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-workout-plan/data");
+        });
+    </script>
 </html>

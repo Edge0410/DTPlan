@@ -10,7 +10,6 @@
 
 body{
     font-family: rubik;
-    min-height: 800px;
     position: relative;
     margin: 0;
     overflow-x: hidden;
@@ -248,4 +247,93 @@ button.plan-submit-button[value="0"]{
 
 button.plan-submit-button[value="1"]{
     color: green;
+}
+
+.container-index{
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    min-height: 500px;
+}
+
+.banner{
+    display: block;
+    margin: auto;
+    width: 45%;
+    height: 80%;
+}
+
+.banner .login-add{
+    display: block;
+    text-align: center;
+    font-family: rubik;
+    color: black;
+    font-weight: bold;
+}
+
+.banner-login{
+    display: block;
+    margin: auto;
+    width: 45%;
+    height: 80%;
+}
+
+.plan-button-banner
+{
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    border: 1px solid black;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.plan-button-simple{
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 10px;
+    color: white;
+    border: 1px solid black;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: blue;
+}
+
+.plan-button-banner:nth-of-type(1){
+    background-image: url(../images/data-diet2.jpg);
+}
+
+.plan-button-banner:nth-of-type(2){
+    background-image: url(../images/plan-muscle5.jpg);
+}
+
+.plan-button-banner:nth-of-type(3){
+    background-color: blue;
+}
+
+.plan-button-banner:hover, .plan-button-simple:hover{
+    color: black;
+    background-image: none;
+    background-color: white;
+    font-weight: bold;
+}
+
+.banner img{
+    float: right;
+    width: 50%;
+    height: 500px;
 }
