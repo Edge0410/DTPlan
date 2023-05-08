@@ -15,20 +15,18 @@
             <div class="centered">
                 <form method="post" action="/complete-register">
                     <label>
-                        Greutate (in Kg)
-                        <br/>
-                        <input type="text" name="weight" required/>
+                        <h5 class="centered">Inaltime (in cm)</h5>
+                        <input type="number" name="height" value="170" required/>
                     </label>
                     <br/>
                     <label>
-                        Inaltime (in cm)
-                        <br/>
-                        <input type="text" name="height" required/>
+                        <h5 class="centered">Greutate (in Kg)</h5>
+                        <input type="number" name="weight" value="65" required/>
                     </label>
                     <br/> 
                     <label>
                         <br/>
-                        <label for="gender"> Gender: </label>
+                        <label for="gender"> <h5 class="centered">Gender:</h5> </label>
                             <select name="gender">
                                 <option value="male" selected>Male</option>
                                 <option value="female">Female</option>
@@ -37,8 +35,8 @@
                     <br/>
                     <br/>
                     <label>
-                        Your Date of Birth <br/>
-                        <input type="date" name="birthday"> 
+                        <h5 class="centered">Date of birth:</h5>
+                        <input type="date" name="birthday" value="2002-10-05"> 
                         <label>
                     <br/>
                     <button type="submit" value="submit">Update profile</button>

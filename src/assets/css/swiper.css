@@ -1,12 +1,17 @@
+.swiper-outer-container{
+  display: flex;
+    margin: auto;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin-bottom: 60px;
+}
+
 .swiper-container {
    width: 800px;
    height: 400px;
-   position: absolute;
-   left: 50%;
-   top: 50%;
-   transform: translate(-50%, -50%);
    padding: 30px;
-   margin-top: 50px;
  }
  
  .swiper-slide {

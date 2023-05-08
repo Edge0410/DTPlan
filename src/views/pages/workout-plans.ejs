@@ -13,13 +13,18 @@
     </header>
 
     <main>
-        <div class="swiper-container">
-            <div class = "swiper-wrapper">
-            
+        <div class="centered">
+            <h1 class="centered" style="font-family: rubik; background-image: url(/assets/images/workout-plan-container-fill.png); color: white; font-weight: bold;">Your workout plans</h1><br>
+            <h6 class="centered" style="font-family: rubik; font-weight: bold; color: gray;">Use the <span style="color: blue">blue arrows</span> or slide to browse your saved diet plans</h6>
+        </div>
+        <div class="swiper-outer-container">
+            <div class="swiper-container">
+                <div class = "swiper-wrapper">
+                </div>
+                <div class = "swiper-pagination"></div>
+                <div class = "swiper-button-prev"></div>
+                <div class = "swiper-button-next"></div>
             </div>
-            <div class = "swiper-pagination"></div>
-            <div class = "swiper-button-prev"></div>
-            <div class = "swiper-button-next"></div>
         </div>
     </main>
 
@@ -33,33 +38,6 @@
         const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-wplans");
     });
 
-    $('.container-plans').on('scroll mousewheel touchmove', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      return false;
-});
-
-    const buttonleft = document.getElementById("left-plan");
-    const buttonright = document.getElementById("right-plan");
-    const container = document.getElementsByClassName("container-plans")[0];
-
-    buttonleft.addEventListener("click", function(){
-        scrl = container.scrollLeft;
-        console.log(scrl);
-        container.scrollBy({
-        left: -260,
-        behavior: "smooth",
-});
-    });
-
-    buttonright.addEventListener("click", function(){
-        scrl = container.scrollLeft;
-        console.log(scrl);
-        container.scrollBy({
-        left: 260,
-        behavior: "smooth",
-});
-    });
 </script>
 
 </html>

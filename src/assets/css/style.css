@@ -69,7 +69,7 @@ form{
     padding: 10px;
 }
 
-form input[type="text"], form input[type="password"]
+form input[type="text"], form input[type="password"], form input[type="number"]
 {
     padding: 10px;
     border: 1px solid black;
@@ -103,6 +103,7 @@ form button[type="submit"]:hover{
     align-items: center;
     justify-content: center;
     align-content: center;
+    margin-bottom: 50px;
 }
 
 .container-plans{
@@ -132,12 +133,51 @@ form button[type="submit"]:hover{
     width: 200px;
     height: 300px;
     /*padding: 20px;*/
+    background-image: url(../images/data-diet4.jpg);
+    background-size: 100% 100%;
+    transition: all 0.2s;
+}
+
+.plan-data:nth-of-type(3n+1)
+{
+    background-image: url(../images/data-diet.jpg)
+}
+
+.plan-data:nth-of-type(3n+2)
+{
+    background-image: url(../images/data-diet3.jpg)
+}
+
+.plan-data-workout
+{
+    display: flex;
+    justify-content: center;
+    /*margin: 10px;*/
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    border-radius: 24px;
+    color: white;
+    min-width: 200px;
+    width: 200px;
+    height: 300px;
+    /*padding: 20px;*/
     background-image: url(../images/plan-muscle.jpg);
     background-size: 100% 100%;
     transition: all 0.2s;
 }
 
-.plan-data:hover{
+.plan-data-workout:nth-of-type(3n+1)
+{
+    background-image: url(../images/plan-muscle10.jpg)
+}
+
+.plan-data-workout:nth-of-type(3n+2)
+{
+    background-image: url(../images/plan-muscle3.jpg)
+}
+
+.plan-data:hover , .plan-data-workout:hover{
     box-shadow: 4px 4px 4px 0 gray; 
 }
 

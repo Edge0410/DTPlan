@@ -12,9 +12,12 @@ function fetchPlans(route) {
                   console.log(res.records.length);//1
                   for(let i=0; i<res.records.length; i++){
                       let planChild = document.createElement('div');
+                      if(route.includes("dplans"))
                       planChild.classList.add("plan-data");
+                       else
+                       planChild.classList.add("plan-data-workout");
                       planChild.classList.add("swiper-slide");
-                      let childTitle = document.createElement('h3');
+                      let childTitle = document.createElement('h2');
                       childTitle.classList.add("plan-title");
                       let childDesc = document.createElement('span');
                       childDesc.classList.add("plan-desc");
