@@ -67,6 +67,7 @@ nav > a:hover{
 
 form{
     padding: 10px;
+    margin-bottom: 50px !important;
 }
 
 form input[type="text"], form input[type="password"], form input[type="number"]
