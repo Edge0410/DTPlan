@@ -283,12 +283,12 @@ app.post("/login", function (req, res) {
             }
             else {
                 req.session.found = -1;
-                res.redirect("/index");
+                res.redirect("/login");
             }
         }
         else {
             req.session.found = -1;
-            res.redirect("/index");
+            res.redirect("/login");
         }
     });
 

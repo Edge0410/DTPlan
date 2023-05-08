@@ -69,6 +69,13 @@ form{
     padding: 10px;
 }
 
+form input[type="text"], form input[type="password"]
+{
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
 form > input[type="submit"], form button[type="submit"]{
     color: blue;
     cursor: pointer;
@@ -337,3 +344,5 @@ button.plan-submit-button[value="1"]{
     width: 50%;
     height: 500px;
 }
+
+
