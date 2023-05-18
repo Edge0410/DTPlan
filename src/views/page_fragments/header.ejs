@@ -1,8 +1,8 @@
 
 
-<% if(locals.user) { %>
+<!-- <% if(locals.user) { %>
         <h5 class="centered">Welcome, <%- locals.user %></h5>
-<% } %>    
+<% } %>     -->
 
 <div id="title-bar">
     <a href="../index">
@@ -13,6 +13,9 @@
     <% if (!locals.user) { %>
         <a id="login-button" href="../login">Login</a>
         <a id="register-button" href="../register">Register</a>
+    <% } else { %>
+        <p id="welcome-message">Welcome, <%- locals.user %></p>
+        <img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg">
     <% } %>
 </div>
 

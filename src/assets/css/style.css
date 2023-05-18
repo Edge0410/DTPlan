@@ -15,6 +15,16 @@ body {
     overflow-x: hidden;
 }
 
+footer {
+    width: 100%;
+    height: 60px;
+    display: flex; /* create a flexbox layout */
+    align-items: center; /* center the text vertically */
+    color: #777777;
+    position: absolute;
+    bottom: 0;
+}
+
 #title-bar {
     width: 100%;
     height: 120px;
@@ -99,15 +109,27 @@ body {
     background: hsl(193, 82%, 35%);
 }
 
-footer {
-    width: 100%;
-    height: 60px;
-    display: flex; /* create a flexbox layout */
-    align-items: center; /* center the text vertically */
-    color: blue;
+#welcome-message {
+    margin: 0px;
+
     position: absolute;
-    bottom: 0;
-  }
+    right: 124px;
+    top: 48px;
+
+    color: #FFFFFF;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+#profile-picture {
+    margin: 0px;
+
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    right: 30px;
+    top: 25px;
+}
 
 main{
     padding: 20px;
