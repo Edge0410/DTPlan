@@ -1,22 +1,28 @@
-<h1 class="centered">DTPlan</h1>
-<h4 class="centered" style="color: gray;">Create your workout & diet plan</h4>
-<nav>
-        <a href="../index">Home</a>
-        <% if(!locals.user) { %>
-        <a href="../login">Login</a>
-        <a href="../register">Register</a>  
-        <% } else { %>        
-        <a href="../diet-plans">My Diet Plans</a>        
-        <a href="../workout-plans">My Workout Plans</a>        
-        <a href="../create-plan">Create plan</a>
-        <a href="../logout">Logout</a> 
-        <% } %>
 
-</nav>
 
 <% if(locals.user) { %>
         <h5 class="centered">Welcome, <%- locals.user %></h5>
-    <% } else { %>
-        <h3 class="centered">Please login or register to create your first plan!</h3>
 <% } %>    
 
+<div id="title-bar">
+    <a href="../index">
+        <h1>DTPlan</h1>
+        <h2>Personalized diet and workout plans</h2>
+    </a>
+
+    <% if (!locals.user) { %>
+        <a id="login-button" href="../login">Login</a>
+        <a id="register-button" href="../register">Register</a>
+    <% } %>
+</div>
+
+<nav>
+    <% if(!locals.user) { %>
+    <% } else { %>        
+    <a href="../diet-plans">My Diet Plans</a>        
+    <a href="../workout-plans">My Workout Plans</a>        
+    <a href="../create-plan">Create plan</a>
+    <a href="../logout">Logout</a> 
+    <% } %>
+
+</nav>
