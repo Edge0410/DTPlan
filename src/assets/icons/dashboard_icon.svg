@@ -1,6 +1,6 @@
 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="6" height="8" rx="0.5" fill="#16ADD8"/>
-<rect width="6" height="8" rx="0.5" transform="matrix(1 0 0 -1 7 13)" fill="#16ADD8"/>
-<rect y="9" width="6" height="4" rx="0.5" fill="#16ADD8"/>
-<rect width="6" height="4" rx="0.5" transform="matrix(1 0 0 -1 7 4)" fill="#16ADD8"/>
+<rect width="6" height="8" rx="0.5" fill="black"/>
+<rect width="6" height="8" rx="0.5" transform="matrix(1 0 0 -1 7 13)" fill="black"/>
+<rect y="9" width="6" height="4" rx="0.5" fill="black"/>
+<rect width="6" height="4" rx="0.5" transform="matrix(1 0 0 -1 7 4)" fill="black"/>
 </svg>
