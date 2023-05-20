@@ -238,6 +238,29 @@ app.get(["/create-plan", "/complete-create-plan"], function (req, res) {
     });
 });
 
+app.get("/diet-plans", function (req, res) {
+    res.set('Cache-Control', 'no-store, no-cache');
+    res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, plancacheid: req.session.insertId, plancachetype: req.session.planType, page: "diet-plans"}, function (err, rezrand) {
+        if (err) {
+            res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+        }
+        else {
+            res.send(rezrand);
+        }
+    });
+});
+
+app.get("/workout-plans", function (req, res) {
+    res.set('Cache-Control', 'no-store, no-cache');
+    res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, plancacheid: req.session.insertId, plancachetype: req.session.planType, page: "workout-plans"}, function (err, rezrand) {
+        if (err) {
+            res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+        }
+        else {
+            res.send(rezrand);
+        }
+    });
+});
 
 app.get("/*", function (req, res) {
     res.set('Cache-Control', 'no-store, no-cache');
