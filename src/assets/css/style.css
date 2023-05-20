@@ -79,7 +79,7 @@ a {
     color: #000000;
 }
 
-#dashboard-navbar {
+#dashboard-navbar { 
     /* position: absolute; */
     width: auto;
     height: 51px;
@@ -162,25 +162,42 @@ a {
     font-size: 24px;
 }
 
-#login-button {
-    display: block;
-    margin: 0px;
-
+#login-register-buttons {
     position: absolute;
+    width: 330px;
+    height: 40px;
+    right: 35px;
+    top: 40px;
+}
+
+#login-register-buttons ul {
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+#login-register-buttons li {
     width: 150px;
     height: 40px;
-    right: 215px;
-    top: 40px;
 
-    background: #EEEEEE;
-    border-radius: 20px;
-
-    text-decoration: none;
+    list-style-type: none;
     color: #000000;
     font-weight: 500;
     font-size: 20px;
     line-height: 40px;
     text-align: center;
+}
+
+#login-register-buttons a {
+    display: block;
+    text-decoration: none;
+}
+
+#login-button {
+    margin: 0px;
+
+    background: #EEEEEE;
+    border-radius: 20px;
 
     transition: background 0.2s ease-in-out;
 }
@@ -190,24 +207,13 @@ a {
 }
 
 #register-button {
-    display: block;
     margin: 0px;
 
-    position: absolute;
-    width: 150px;
-    height: 40px;
-    right: 35px;
-    top: 40px;
+    position: relative;
+    left: 30px;
 
     background: #16ADD8;
     border-radius: 20px;
-
-    text-decoration: none;
-    color: #000000;
-    font-weight: 500;
-    font-size: 20px;
-    line-height: 40px;
-    text-align: center;
 
     transition: background 0.2s ease-in-out;
 }

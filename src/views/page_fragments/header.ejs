@@ -1,12 +1,15 @@
 <div id="title-bar">
     <% if (!locals.user) { %>
-        <a id="login-button" href="../login">Login</a>
-        <a id="register-button" href="../register">Register</a>
+        <nav id="login-register-buttons">
+            <ul>
+                <li id="login-button"><a href="../login">Login</a></li>
+                <li id="register-button"><a href="../register">Register</a></li>
+            </ul>
+        </nav>
     <% } else { %>
-        <p id="welcome-message">Welcome back, <%- locals.user %></p>
-        <a href="../logout"><img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg"></a>
+        <p id="welcome-message">Welcome back, <%- locals.user %>. <a href="../logout" style="color: white">Log out</a>.</p>
+        <img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg">
     <% } %>
-
 
     <a href="../index">
         <h1>DTPlan</h1>
