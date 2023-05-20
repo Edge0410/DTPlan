@@ -1,27 +1,40 @@
 <div id="title-bar">
-    <a href="../index">
-        <h1>DTPlan</h1>
-        <h4>Personalized diet and workout plans</h4>
-    </a>
-
     <% if (!locals.user) { %>
         <a id="login-button" href="../login">Login</a>
         <a id="register-button" href="../register">Register</a>
     <% } else { %>
-        <a href="../logout"><p id="welcome-message">Welcome, <%- locals.user %></p></a>
-        <img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg">
+        <p id="welcome-message">Welcome back, <%- locals.user %></p>
+        <a href="../logout"><img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg"></a>
     <% } %>
+
+
+    <a href="../index">
+        <h1>DTPlan</h1>
+        <h4>Personalized diet and workout plans</h4>
+    </a>
 </div>
 
 <% if(locals.user) { %>
     <div>
         <nav id="dashboard-navbar">
             <ul>
-                <li><a href="../index"><img src="../../assets/icons/dashboard_icon.svg">Dashboard</a></li>
+                <% if (locals.page == "dashboard") { %>
+                    <li><a href="../index"><img src="../../assets/icons/dashboard_icon_highlighted.svg"><span style="color: #16add8;">Dashboard</span></a></li>
+                <% } else { %>
+                    <li><a href="../index"><img src="../../assets/icons/dashboard_icon.svg">Dashboard</a></li>
+                <% } %>
                 <li><a href="../index"><img src="../../assets/icons/details_icon.svg">Details</a></li>
                 <li><a href="../index"><img src="../../assets/icons/goals_icon.svg">Goals</a></li>
-                <li><a href="../diet-plans"><img src="../../assets/icons/diet_plans_icon.svg">Diet Plans</a></li>
-                <li><a href="../workout-plans"><img src="../../assets/icons/workout_plans_icon.svg">Workout Plans</a></li>
+                <% if (locals.page == "diet-plans") { %>
+                    <li><a href="../diet-plans"><img src="../../assets/icons/diet_plans_icon_highlighted.svg"><span style="color: #16add8;">Diet Plans</span></a></li>
+                <% } else { %>
+                    <li><a href="../diet-plans"><img src="../../assets/icons/diet_plans_icon.svg">Diet Plans</a></li>
+                <% } %>
+                <% if (locals.page == "workout-plans") { %>
+                    <li><a href="../workout-plans"><img src="../../assets/icons/workout_plans_icon_highlighted.svg"><span style="color: #16add8">Workout Plans</span></a></li>
+                <% } else { %>
+                    <li><a href="../workout-plans"><img src="../../assets/icons/workout_plans_icon.svg">Workout Plans</a></li>
+                <% } %>
                 <!-- <li><a href="../create-plan">Create plan</a></li> -->
                 <!-- <li><a href="../logout">Logout</a></li> -->
             </ul>

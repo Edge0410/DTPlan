@@ -21,7 +21,7 @@ app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false }));
 
 app.get(["/", "/index"], function (req, res) {
     console.log(req.session.userid);
-    res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found });
+    res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found, page: "dashboard" });
     if (req.session.found == -1) {
         req.session.found = 0;
         req.session.save();
@@ -78,7 +78,7 @@ app.get("/fetch-dplans", function (req, res) {
 app.get("/view-diet-plan", function(req, res){
     let plan_id = req.query.id;
     res.set('Cache-Control', 'no-store, no-cache');
-    res.render("pages" + url.parse(req.url).pathname, { id: req.session.userid, user: req.session.user, found: req.session.found }, function (err, rezrand) {
+    res.render("pages" + url.parse(req.url).pathname, { id: req.session.userid, user: req.session.user, found: req.session.found, page: "diet-plans" }, function (err, rezrand) {
         if (err) {
             res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
         }
@@ -134,7 +134,7 @@ app.get("/view-diet-plan/data", function (req, res) {
 app.get("/view-workout-plan", function(req, res){
     let plan_id = req.query.id;
     res.set('Cache-Control', 'no-store, no-cache');
-    res.render("pages" + url.parse(req.url).pathname, { id: req.session.userid, user: req.session.user, found: req.session.found }, function (err, rezrand) {
+    res.render("pages" + url.parse(req.url).pathname, { id: req.session.userid, user: req.session.user, found: req.session.found, page: "workout-plans" }, function (err, rezrand) {
         if (err) {
             console.log(err);
             res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
@@ -283,12 +283,12 @@ app.post("/login", function (req, res) {
             }
             else {
                 req.session.found = -1;
-                res.redirect("/login");
+                res.render("pages/login", { response: "wrong_password" });
             }
         }
         else {
             req.session.found = -1;
-            res.redirect("/login");
+            res.render("pages/login", { response: "username_not_found" });
         }
     });
 

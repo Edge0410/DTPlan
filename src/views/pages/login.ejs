@@ -7,24 +7,37 @@
 
     <body>
         <main>
-            <h1 class="centered"><a href="../index" style="text-decoration: none;">DTPlan</a></h1>
             <% if(locals.user) { %>
                 <br/>
                 <h5 class="centered">You are already logged in! Go to <a href="../index">dashboard</a>.</h5>
             <% } else { %>
                 <!-- <h3 class="centered">Login</h3> -->
                 <div class="centered">
+                    <h1><a href="../index" style="text-decoration: none;">DTPlan</a></h1>
+                    <% if (locals.response == "username_not_found") { %>
+                        <h5 class="centered" style="color: red">Username does not exist!</h5>
+                    <% } else if (locals.response == "wrong_password") { %>
+                        <h5 class="centered" style="color: red">Wrong password!</h5>
+                    <% } %>
                     <form method="post" action="/login">
                         <label>
                             <!-- <h5 class="centered">Username</h5> -->
                             <!-- <i class="fa-solid fa-user"></i> -->
-                            <input type="text" name="username" placeholder="Username" required/>
+                            <% if (locals.response == "username_not_found") { %>
+                                <input type="text" name="username" placeholder="Username" style="color: red; border: 1px solid red;" required/>
+                            <% } else { %>
+                                <input type="text" name="username" placeholder="Username" required/>
+                            <% } %>
                         </label>
                         <br/>
                         <label>
                             <!-- <h5 class="centered">Password</h5> -->
                             <!-- <i class="fa-sharp fa-solid fa-lock"></i> -->
-                            <input type="password" name="password" placeholder="Password" required/>
+                            <% if (locals.response == "wrong_password") { %>
+                                <input type="password" name="password" placeholder="Password" style="color: red; border: 1px solid red;" required/>
+                            <% } else { %>
+                                <input type="password" name="password" placeholder="Password" required/>
+                            <% } %>
                         </label>
                         <br/> 
                         <button type="submit" value="submit">Log In</button>
