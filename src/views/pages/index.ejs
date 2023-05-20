@@ -11,26 +11,48 @@
         </header>
 
         <main>
-            <div class="container-index">
-            <% if(!locals.user){ %>
-                <div class="banner">
-                    <h1 class="centered" style="font-family: rubik; font-weight: bold; margin: 40px; font-size: 3em;"><span style="color:blue;">Nothing</span> holds you from being the best.</h3>
-                    <h4 class="centered" style="font-family: rubik; font-weight: bold; color: gray; font-size: 1.2em;">Maintain a healthy routine while enjoying your life to the fullest. Jump in our <span style="color: black;">Diet & Workout Plan Creator</span> that provides everything for you to get back in shape.</h4>
-                    <a href="/register" class="plan-button-simple">Join & Create your first plan!</a>   
-                    <a href="/login" class="login-add">Already a member? Sign in</a> 
-                </div>
-                <img src="/assets/images/dashb.png">
-            
-            <% } else { %>
-                <div class="banner-login">
-                    <h1 class="centered" style="font-family: rubik; font-weight: bold; margin: 40px; font-size: 3em;">Glad you are here. <br><span style="color: blue;">Let's get started.</span></h3>
-                    <a href="/diet-plans" class="plan-button-banner">Your diet plans</a>
-                    <a href="/workout-plans" class="plan-button-banner">Your workout plans</a>
-                    <a href="/create-plan" class="plan-button-banner">Create another plan</a>
-                    <img src="/assets/images/dashb-login.png" style="display: block; margin: auto; width: 150px; height: 150px;">
-                </div>
-            <% } %>
-        </div>
+            <!-- <div class="container-index"> -->
+                <% if(!locals.user){ %>
+                    <div class="banner">
+                        <h1 class="centered" style="font-family: rubik; font-weight: bold; margin: 40px; font-size: 3em;"><span style="color:blue;">Nothing</span> holds you from being the best.</h3>
+                        <h4 class="centered" style="font-family: rubik; font-weight: bold; color: gray; font-size: 1.2em;">Maintain a healthy routine while enjoying your life to the fullest. Jump in our <span style="color: black;">Diet & Workout Plan Creator</span> that provides everything for you to get back in shape.</h4>
+                        <a href="/register" class="plan-button-simple">Join & Create your first plan!</a>   
+                        <a href="/login" class="login-add">Already a member? Sign in</a> 
+                    </div>
+                    <img src="/assets/images/dashb.png">
+                <% } else { %>
+                    <!-- <div class="banner-login">
+                        <h1 class="centered" style="font-family: rubik; font-weight: bold; margin: 40px; font-size: 3em;">Glad you are here. <br><span style="color: blue;">Let's get started.</span></h3>
+                        <a href="/diet-plans" class="plan-button-banner">Your diet plans</a>
+                        <a href="/workout-plans" class="plan-button-banner">Your workout plans</a>
+                        <a href="/create-plan" class="plan-button-banner">Create another plan</a>
+                        <img src="/assets/images/dashb-login.png" style="display: block; margin: auto; width: 150px; height: 150px;">
+                    </div> -->
+                    <div id="container-dashboard">
+                        <div id="dashboard-details-section">
+                            <h2>My details</h2>
+                            
+                            <p class="dashboard-row"><span class="dashboard-left-column">Username</span> <span class="dashboard-right-column"><%- locals.user %></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Height</span> <span class="dashboard-right-column"><%- locals.user_height %><span class="dashboard-unit">cm</span></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Weight</span> <span class="dashboard-right-column"><%- locals.user_weight %><span class="dashboard-unit">kg</span></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Gender</span> <span class="dashboard-right-column"><% if (locals.user_gender == 1) { %> Male <% } else { %> Female <% } %></span></p>
+                            
+                            <a href="/update-details" class="dashboard-button">Update details</a>
+                        </div>
+
+                        <div id="dashboard-goals-section">
+                            <h2>My goals</h2>
+                            <h4>Coming soon!</h4>
+                        </div>
+
+                        <div id="dashboard-diet-plans-section">
+
+                        </div>
+
+                        <div id="dashboard-workout-plans-section"></div>
+                    </div>
+                <% } %>
+            <!-- </div> -->
         </main>
 
         <footer>

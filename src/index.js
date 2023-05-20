@@ -21,10 +21,58 @@ app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false }));
 
 app.get(["/", "/index"], function (req, res) {
     console.log(req.session.userid);
-    res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found, page: "dashboard" });
+
+    if (req.session.found === 1) {
+        console.log("logged in, fetching user details");
+        console.log("user id follows:");
+        console.log(req.session.userid);
+
+        query = `SELECT * FROM users WHERE id = "${req.session.userid}"`;
+        
+        database.query(query, function(err, resq) {
+            if (err) {
+                console.log("error fetching");
+            }
+            else {
+                console.log("fetch succesful")
+                // console.log(resq[0]);
+            }
+
+            res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "dashboard" });
+        });
+    }
+    else {
+        res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found, page: "dashboard" });
+    }
+
     if (req.session.found == -1) {
         req.session.found = 0;
         req.session.save();
+    }
+});
+
+app.get("/update-details", function(req, res) {
+    if (req.session.found === 1) {
+        console.log("logged in, fetching user details");
+        console.log("user id follows:");
+        console.log(req.session.userid);
+
+        query = `SELECT * FROM users WHERE id = "${req.session.userid}"`;
+        
+        database.query(query, function(err, resq) {
+            if (err) {
+                console.log("error fetching");
+            }
+            else {
+                console.log("fetch succesful")
+                // console.log(resq[0]);
+            }
+
+            res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "details" });
+        });
+    }
+    else {
+        res.redirect("/index");
     }
 });
 
@@ -314,6 +362,31 @@ app.post("/login", function (req, res) {
     });
 
     console.log(req.session.user);
+});
+
+app.post("/save-updated-details", function(req, res) {
+    var username = req.body.username;
+    var height = req.body.height;
+    var weight = req.body.weight;
+    var gender = req.body.gender;
+    var birth_date = new String(req.body.birthday);
+
+    var intgender;
+    if (gender == "male")
+        intgender = 1;
+    else
+        intgender = 0;
+
+    query = `UPDATE users 
+    set username = "${username}", weight = ${weight}, height = ${height}, gender = ${intgender}, birth_date = STR_TO_DATE('${birth_date}', '%Y-%m-%d')
+    where id = ${req.session.userid};`
+
+    database.query(query, function (err, resq) {
+        if (err) throw err;
+        console.log(resq.affectedRows);
+    });
+
+    res.redirect("/index");
 });
 
 app.post("/complete-register", function (req, res) {

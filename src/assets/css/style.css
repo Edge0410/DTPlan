@@ -252,6 +252,11 @@ a {
 
 form {
     padding: 10px;
+
+    font-family: rubik-variable;
+    font-weight: 400;
+    font-size: 20px;
+
     /* margin-bottom: 50px !important; */
 }
 
@@ -272,16 +277,6 @@ form input[type="text"], form input[type="password"], form input[type="number"],
 }
 
 form > input[type="submit"], form button[type="submit"]{
-    /* color: blue;
-    cursor: pointer;
-    font-weight: bold;
-    border: 1px solid black;
-    outline: 0;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 6px;
-    transition: all 0.15s; */
-
     margin: 8px;
     width: 284px;
     height: 46px;
@@ -317,15 +312,172 @@ form button[type="submit"]:hover{
     color: #000000;
 }
 
-.centered{
+#container-dashboard {
+    display: grid;
+    /* align-items: center; */
+
+    position: relative;
+    margin: auto;
+    padding: 30px;
+    padding-top: 24px;
+    padding-bottom: 0px;
+    width: auto;
+    /* height: 540px; */
+
+    column-gap: 24px;
+    row-gap: 24px;
+
+    grid-template-columns: 1fr 1.3fr 1.3fr;
+    /* grid-template-rows: 296px 220px; */
+    grid-template-areas: 
+        "area-dds area-ddps area-dwps"
+        "area-dgs area-ddps area-dwps";
+}
+
+#container-dashboard>div {
+    position: relative;
+
+    background: #EEEEEE;
+    border-radius: 8px;
+
+    padding: 20px;
+    /* padding-top: 24px; */
+}
+
+#dashboard-details-section {
+    grid-area: area-dds;
+}
+
+#dashboard-goals-section {
+    grid-area: area-dgs;
+}
+
+#dashboard-diet-plans-section {
+    grid-area: area-ddps;
+}
+
+#dashboard-workout-plans-section {
+    grid-area: area-dwps;
+}
+
+.dashboard-row {
+    line-height: 24px;
+}
+
+.dashboard-left-column {
+    color: #777777;
+    font-weight: 300;
+    font-size: 18px;
+    text-align: left;
+}
+
+.dashboard-right-column {
+    float: right;
+
+    color: #000000;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: right;
+}
+
+.dashboard-unit {
+    color: #777777;
+    font-weight: 300;
+}
+
+.dashboard-button {
+    display: block;
+
+    width: auto;
+    height: 46px;
+
+    border: 3px solid #16ADD8;
+    border-radius: 8px;
+
+    text-decoration: none;
+    color: #16ADD8;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 46px;
+    text-align: center;
+}
+
+.dashboard-button:hover {
+    background: #16ADD8;
+    color: #FFFFFF;
+}
+
+#container-details {
+    background: #EEEEEE;
+    border-radius: 8px;
+
+    margin: 30px;
+    margin-top: 24px;
+
+    padding: 20px;
+}
+
+form.dashboard-form {
+    padding-bottom: 0px;
+}
+
+form.dashboard-form input[type="text"], form.dashboard-form input[type="password"], form.dashboard-form input[type="number"], form.dashboard-form input[type="date"]
+{
+    width: 264px;
+    border: 0px;
+    text-align: center;
+}
+
+form.dashboard-form > input[type="submit"], form.dashboard-form button[type="submit"]{
+    background: #EEEEEE;
+    border: 3px solid #16ADD8;
+
+    color: #16ADD8;
+    font-weight: 600;
+}
+
+form.dashboard-form select {
+    border: 0px;
+    text-align: center;
+}
+
+form.dashboard-form button[type="submit"]:hover{
+    background-color: #16ADD8;
+    color: #FFFFFF;
+}
+
+.form-cancel-button {
+    display: inline-block;
+
+    margin-top: 8px;
+    margin-bottom: 8px;
+    width: 284px;
+    height: 40px;
+
+    border: 3px solid #777777;
+    border-radius: 8px;
+
+    text-decoration: none;
+    color: #777777;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.form-cancel-button:hover {
+    background: #777777;
+    color: #FFFFFF;
+}
+
+.centered {
     text-align: center;
     margin: auto;
 }
 
 /* plan data on view plans */
 
-.container
-{
+.container {
     display: flex;
     margin: auto;
     width: 100%;
@@ -335,7 +487,7 @@ form button[type="submit"]:hover{
     margin-bottom: 50px;
 }
 
-.container-plans{
+.container-plans {
     display: flex;
     align-items: center;
     width: 780px;
@@ -530,9 +682,10 @@ button.plan-submit-button[value="1"]{
     align-items: center;
     position: relative;
     margin: auto;
-    padding: 20px;
-    width: 80%;
-    min-height: 500px;
+    padding: 30px;
+    padding-top: 24px;
+    width: auto;
+    min-height: 540px;
 }
 
 .banner{
