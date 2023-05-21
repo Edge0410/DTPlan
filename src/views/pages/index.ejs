@@ -14,13 +14,15 @@
         <main>
             <!-- <div class="container-index"> -->
                 <% if(!locals.user){ %>
-                    <div class="banner">
-                        <h1 class="centered" style="font-family: rubik; font-weight: bold; margin: 40px; font-size: 3em;"><span style="color:blue;">Nothing</span> holds you from being the best.</h3>
-                        <h4 class="centered" style="font-family: rubik; font-weight: bold; color: gray; font-size: 1.2em;">Maintain a healthy routine while enjoying your life to the fullest. Jump in our <span style="color: black;">Diet & Workout Plan Creator</span> that provides everything for you to get back in shape.</h4>
-                        <a href="/register" class="plan-button-simple">Join & Create your first plan!</a>   
-                        <a href="/login" class="login-add">Already a member? Sign in</a> 
+                    <div class="container-index">
+                        <div class="banner">
+                            <h2 class="centered"><span style="color:#16ADD8;">Nothing</span> is stopping you from being the best.</h2>
+                            <h4 class="centered">Maintain a healthy routine while enjoying your life to the fullest. Jump in our <span style="color: black;">Diet & Workout Plan Creator</span> that provides everything for you to get back in shape.</h4>
+                            <h5><a href="/register" class="plan-button-simple">Join & Create your first plan!</a></h5>
+                            <h5><a href="/login" class="login-add">Already a member? Sign in</a></h5>
+                        </div>
+                        <div class="banner-image"><img src="/assets/images/dashb.png"></div>
                     </div>
-                    <img src="/assets/images/dashb.png">
                 <% } else { %>
                     <!-- <div class="banner-login">
                         <h1 class="centered" style="font-family: rubik; font-weight: bold; margin: 40px; font-size: 3em;">Glad you are here. <br><span style="color: blue;">Let's get started.</span></h3>

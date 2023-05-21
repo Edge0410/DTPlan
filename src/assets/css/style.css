@@ -293,17 +293,17 @@ a {
         right: 30px;
         top: 17px;
     }
-    
+
     #login-register-buttons ul {
         display: flex;
         padding: 0;
         margin: 0;
     }
-    
+
     #login-register-buttons li {
         width: 100%;
         height: 40px;
-    
+
         list-style-type: none;
         color: #000000;
         font-weight: 500;
@@ -311,7 +311,7 @@ a {
         line-height: 40px;
         text-align: center;
     }
-    
+
     #login-register-buttons a {
         display: block;
         text-decoration: none;
@@ -615,6 +615,7 @@ textarea {
 }
 
 @media screen and (max-width: 420px) {
+
     form.dashboard-form input[type="text"],
     form.dashboard-form input[type="password"],
     form.dashboard-form input[type="number"],
@@ -746,16 +747,20 @@ textarea {
 .plan-button {
     cursor: pointer;
     padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: #16add8;
     margin-bottom: 10px;
-    color: white;
-    border: 1px solid black;
-    border-radius: 5px;
+    /* border: 1px solid black; */
+    border-radius: 8px;
     text-decoration: none;
+    color: white;
+    font-size: 24px;
+    font-weight: 300;
 }
 
 .plan-button:hover {
-    color: black;
+    color: #16ADD8;
     background-color: white;
     /* font-weight: bold; */
 }
@@ -869,6 +874,13 @@ button.plan-submit-button[value="1"] {
     min-height: 540px;
 }
 
+@media screen and (max-width: 930px) {
+    .container-index {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 .banner {
     display: block;
     margin: auto;
@@ -879,9 +891,23 @@ button.plan-submit-button[value="1"] {
 .banner .login-add {
     display: block;
     text-align: center;
-    font-family: rubik;
+    /* font-family: rubik;
     color: black;
-    font-weight: bold;
+    font-weight: bold; */
+}
+
+.banner-image {
+    position: relative;
+}
+
+.banner-image::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%; /* Adjust the height as needed */
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
 }
 
 .banner-login {
@@ -915,11 +941,12 @@ button.plan-submit-button[value="1"] {
     cursor: pointer;
     padding: 10px;
     color: white;
-    border: 1px solid black;
-    font-weight: bold;
-    border-radius: 5px;
+    /* border: 1px solid black; */
+    /* font-weight: bold; */
+    border-radius: 8px;
     text-decoration: none;
     background-color: #16add8;
+    border: 2px solid #16ADD8;
 }
 
 .plan-button-banner:nth-of-type(1) {
@@ -936,10 +963,11 @@ button.plan-submit-button[value="1"] {
 
 .plan-button-banner:hover,
 .plan-button-simple:hover {
-    color: black;
+    color: #16ADD8;
     background-image: none;
     background-color: white;
-    font-weight: bold;
+    border: 2px solid #16ADD8;
+    /* font-weight: bold; */
 }
 
 .banner img {
