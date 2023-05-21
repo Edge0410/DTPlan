@@ -601,8 +601,10 @@ form.dashboard-form button[type="submit"]:hover {
 }
 
 textarea {
-    width: 440px;
+    width: 430px;
     height: 240px;
+
+    padding: 10px;
 
     border: unset;
     border-radius: 8px;
@@ -651,7 +653,7 @@ textarea {
     align-items: center;
     justify-content: center;
     align-content: center;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
 }
 
 .container-plans {
@@ -719,10 +721,10 @@ textarea {
     background-image: url(../images/plan-muscle3.jpg)
 }
 
-.plan-data:hover,
+/* .plan-data:hover,
 .plan-data-workout:hover {
     box-shadow: 4px 4px 4px 0 gray;
-}
+} */
 
 .plan-desc {
     display: block;
@@ -755,7 +757,7 @@ textarea {
 .plan-button:hover {
     color: black;
     background-color: white;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 .diet-data {
@@ -765,12 +767,12 @@ textarea {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border-radius: 25px;
+    border-radius: 8px;
     text-align: center;
     color: white;
-    width: 150px;
-    height: 100px;
-    padding: 5px;
+    width: 440px;
+    height: 240px;
+    /* padding: 5px; */
     background-image: url(../images/data-diet.jpg);
     background-size: 100% 100%;
     transition: all 0.2s;
@@ -784,8 +786,12 @@ textarea {
     background-image: url(../images/data-diet3.jpg)
 }
 
+.container .diet-data:last-child {
+    margin-bottom: 0px;
+}
+
 .diet-data:hover {
-    box-shadow: 4px 4px 4px 0 gray;
+    /* box-shadow: 4px 4px 4px 0 gray; */
     transform: scale(1.05);
 }
 
@@ -796,12 +802,12 @@ textarea {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border-radius: 25px;
+    border-radius: 8px;
     text-align: center;
     color: white;
-    width: 250px;
-    height: 150px;
-    padding: 5px;
+    width: 440px;
+    height: 240px;
+    /* padding: 5px; */
     background-image: url(../images/plan-muscle3.jpg);
     background-size: 100% 100%;
     transition: all 0.2s;
@@ -816,8 +822,27 @@ textarea {
 }
 
 .workout-data:hover {
-    box-shadow: 4px 4px 4px 0 gray;
+    /* box-shadow: 4px 4px 4px 0 gray; */
     transform: scale(1.05);
+}
+
+@media screen and (max-width: 580px) {
+    textarea {
+        width: 100%;
+
+        margin: 0 auto;
+
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .diet-data {
+        width: 100%;
+    }
+
+    .workout-data {
+        width: 100%;
+    }
 }
 
 .diet-desc {

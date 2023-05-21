@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <%- include("../page_fragments/head.ejs") %>
+
+<head>
+    <%- include("../page_fragments/head.ejs") %>
         <script src="/assets/js/script.js"></script>
-    </head>
+</head>
 
-    <body>
-        <header>
-            <%- include("../page_fragments/header.ejs") %>
-        </header>
+<body>
+    <header>
+        <%- include("../page_fragments/header.ejs") %>
+    </header>
 
-        <main>
-        <div class="container" style="flex-direction: column;">
-            
+    <main>
+        <div id="container-plans">
+            <div class="container" style="flex-direction: column;">
+                
+            </div>
+            <form action="/manage-diet-plan" id="manage-diet-plan" class="centered dashboard-form" method="post">
+                <!--<button type="submit" name="submit" value="1" class="plan-submit-button">Download plan as PDF</button><br>-->
+                <button type="submit" name="submit" value="0" class="plan-submit-button plan-discard-button">Delete plan</button>
+            </form>
         </div>
-        <form action="/manage-diet-plan" id="manage-diet-plan" class="centered" method="post">
-            <!--<button type="submit" name="submit" value="1" class="plan-submit-button">Download plan as PDF</button><br>-->
-            <button type="submit" name="submit" value="0" class="plan-submit-button">Delete plan</button>
-          </form>
-        </main>
+    </main>
 
-        <footer>
-            <%- include("../page_fragments/footer.ejs") %>
-        </footer>
-    </body>
-    <script>
-        $(document).ready(async function () {
-            const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-diet-plan/data");
-        });
-    </script>
+    <footer>
+        <%- include("../page_fragments/footer.ejs") %>
+    </footer>
+</body>
+<script>
+    $(document).ready(async function () {
+        const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-diet-plan/data");
+    });
+</script>
+
 </html>

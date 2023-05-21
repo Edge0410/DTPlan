@@ -3,6 +3,7 @@
 <html>
     <head>
         <%- include("../page_fragments/head.ejs") %>
+        <script src="/assets/js/script.js"></script>
     </head>
 
     <body>
@@ -46,10 +47,40 @@
                         </div>
 
                         <div id="dashboard-diet-plans-section">
+                            <h2>My diet plans</h2>
+                            <h4>List view coming soon!</h4>
 
+                            <!-- <div class="swiper-outer-container">
+                                <div class="swiper-container">
+                                    <div class = "swiper-wrapper">
+                                    
+                                    </div>
+                                    <div class = "swiper-pagination"></div>
+                                    <div class = "swiper-button-prev"></div>
+                                    <div class = "swiper-button-next"></div>
+                                </div>
+                            </div> -->
+
+                            <a href="/diet-plans" class="dashboard-button" style="margin-top: 30px;">View all</a>
                         </div>
 
-                        <div id="dashboard-workout-plans-section"></div>
+                        <div id="dashboard-workout-plans-section">
+                            <h2>My workout plans</h2>
+                            <h4>List view coming soon!</h4>
+
+                            <!-- <div class="swiper-outer-container">
+                                <div class="swiper-container">
+                                    <div class = "swiper-wrapper">
+                                    
+                                    </div>
+                                    <div class = "swiper-pagination"></div>
+                                    <div class = "swiper-button-prev"></div>
+                                    <div class = "swiper-button-next"></div>
+                                </div>
+                            </div> -->
+
+                            <a href="/workout-plans" class="dashboard-button" style="margin-top: 30px;">View all</a>
+                        </div>
                     </div>
                 <% } %>
             <!-- </div> -->
@@ -59,4 +90,14 @@
             <%- include("../page_fragments/footer.ejs") %>
         </footer>
     </body>
+
+    <script>
+        $(document).ready(async function () {
+            const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-dplans", 0);
+        });
+
+        $(document).ready(async function () {
+            const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-wplans", 1);
+        });
+    </script>
 </html>
