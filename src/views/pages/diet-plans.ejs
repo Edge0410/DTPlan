@@ -26,6 +26,7 @@
                         <div class = "swiper-button-next"></div>
                     </div>
                 </div>
+                <a href="/create-diet-plan" class="centered dashboard-button" style="width: 278px;">Create new plan</a>
             </div>
         </main>
 
@@ -35,10 +36,8 @@
     </body>
 
     <script>
-
-
-$(document).ready(async function () {
-        const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-dplans");
+    $(document).ready(async function () {
+            const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-dplans");
     });
     </script>
 </html>

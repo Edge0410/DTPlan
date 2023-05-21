@@ -590,6 +590,28 @@ form.dashboard-form button[type="submit"]:hover {
     color: #FFFFFF;
 }
 
+.plan-discard-button {
+    color: #FF0000 !important;
+    border-color: #FF0000 !important;
+}
+
+.plan-discard-button:hover {
+    color: #FFFFFF !important;
+    background-color: #FF0000 !important;
+}
+
+textarea {
+    width: 440px;
+    height: 240px;
+
+    border: unset;
+    border-radius: 8px;
+
+    font-family: rubik-variable;
+    font-weight: 400;
+    font-size: 20px;
+}
+
 @media screen and (max-width: 420px) {
     form.dashboard-form input[type="text"],
     form.dashboard-form input[type="password"],

@@ -28,8 +28,8 @@ app.get(["/", "/index"], function (req, res) {
         console.log(req.session.userid);
 
         query = `SELECT * FROM users WHERE id = "${req.session.userid}"`;
-        
-        database.query(query, function(err, resq) {
+
+        database.query(query, function (err, resq) {
             if (err) {
                 console.log("error fetching");
             }
@@ -61,15 +61,15 @@ app.get(["/", "/index"], function (req, res) {
     }
 });
 
-app.get("/update-details", function(req, res) {
+app.get("/update-details", function (req, res) {
     if (req.session.found === 1) {
         console.log("logged in, fetching user details");
         console.log("user id follows:");
         console.log(req.session.userid);
 
         query = `SELECT * FROM users WHERE id = "${req.session.userid}"`;
-        
-        database.query(query, function(err, resq) {
+
+        database.query(query, function (err, resq) {
             if (err) {
                 console.log("error fetching");
             }
@@ -305,28 +305,81 @@ app.get(["/create-plan", "/complete-create-plan"], function (req, res) {
     });
 });
 
-app.get("/diet-plans", function (req, res) {
+app.get(["/create-diet-plan", "/create-workout-plan"], function (req, res) {
     res.set('Cache-Control', 'no-store, no-cache');
-    res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, plancacheid: req.session.insertId, plancachetype: req.session.planType, page: "diet-plans"}, function (err, rezrand) {
-        if (err) {
-            res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
-        }
-        else {
-            res.send(rezrand);
-        }
-    });
+    if (req.session.found === 1) {
+        console.log("logged in, fetching user details");
+        console.log("user id follows:");
+        console.log(req.session.userid);
+
+        query = `SELECT * FROM users WHERE id = "${req.session.userid}"`;
+
+        database.query(query, function (err, resq) {
+            if (err) {
+                console.log("error fetching");
+            }
+            else {
+                console.log("fetch succesful")
+                // console.log(resq[0]);
+            }
+
+            var user_data = {
+                height: resq[0].height,
+                weight: resq[0].weight,
+                gender: resq[0].gender,
+                birth_date: resq[0].birth_date
+            };
+
+            res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, user_data: user_data }, function (err, rezrand) {
+                if (err) {
+                    res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+                }
+                else if (!req.session.user) {
+                    res.redirect("/login");
+                }
+                else {
+                    res.send(rezrand);
+                }
+            });
+        });
+    }
+    else {
+        res.redirect("/login");
+    }
+});
+
+app.get("/diet-plans", function (req, res) {
+    if (req.session.found === 1) {
+        res.set('Cache-Control', 'no-store, no-cache');
+        res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, plancacheid: req.session.insertId, plancachetype: req.session.planType, page: "diet-plans" }, function (err, rezrand) {
+            if (err) {
+                res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+            }
+            else {
+                res.send(rezrand);
+            }
+        });
+    }
+    else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/workout-plans", function (req, res) {
-    res.set('Cache-Control', 'no-store, no-cache');
-    res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, plancacheid: req.session.insertId, plancachetype: req.session.planType, page: "workout-plans"}, function (err, rezrand) {
-        if (err) {
-            res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
-        }
-        else {
-            res.send(rezrand);
-        }
-    });
+    if (req.session.found === 1) {
+        res.set('Cache-Control', 'no-store, no-cache');
+        res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, plancacheid: req.session.insertId, plancachetype: req.session.planType, page: "workout-plans" }, function (err, rezrand) {
+            if (err) {
+                res.render("pages/error404", { id: req.session.userid, user: req.session.user, found: req.session.found });
+            }
+            else {
+                res.send(rezrand);
+            }
+        });
+    }
+    else {
+        res.redirect("/login");
+    }
 });
 
 app.get("/*", function (req, res) {
@@ -385,7 +438,7 @@ app.post("/login", function (req, res) {
     console.log(req.session.user);
 });
 
-app.post("/save-updated-details", function(req, res) {
+app.post("/save-updated-details", function (req, res) {
     var username = req.body.username;
     var height = req.body.height;
     var weight = req.body.weight;
@@ -449,11 +502,11 @@ app.post("/register", function (req, res) {
 
     database.query(query_check, function (err, resq) {
         if (err) throw err;
-            if (resq.length > 0) {
-                console.log("username taken error");
-                // res.redirect("/index");
-                // res.render("pages/register", { response: "username_taken" });
-            }
+        if (resq.length > 0) {
+            console.log("username taken error");
+            // res.redirect("/index");
+            // res.render("pages/register", { response: "username_taken" });
+        }
     });
 
     query = `
@@ -480,13 +533,20 @@ app.post("/register", function (req, res) {
     })
 });
 
+function diff_years(dateStr) {
+    var date = new Date(dateStr);
+    var diff = (Date.now() - date.getTime()) / 1000;
+    diff /= (60 * 60 * 24);
+    return Math.abs(Math.round(diff / 365.25));
+}
+
 app.post("/create-plan", async function (req, res) {
     console.log(req.body);
 
     var ptype = req.body.ptype;
     var height = req.body.height;
     var weight = req.body.weight;
-    var age = req.body.age;
+    // var age = req.body.age;
     var routine = req.body.routine;
     var goal = req.body.goal;
     console.log("id:" + req.session.userid);
@@ -497,6 +557,18 @@ app.post("/create-plan", async function (req, res) {
             else resolve(res[0].gender);
         });
     });
+    var birth_date = await new Promise((resolve, reject) => {
+        const query = "SELECT birth_date from users where id = " + req.session.userid;
+        database.query(query, function (err, res) {
+            if (err) reject(err);
+            else resolve(res[0].birth_date);
+        });
+    });
+    console.log("Birthday: " + birth_date);
+
+    var age = diff_years(birth_date);
+    
+    console.log("Age (calculated): " + age);
 
     console.log("Gender: " + gender);
     var inserted_id;
