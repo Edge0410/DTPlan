@@ -38,7 +38,17 @@ app.get(["/", "/index"], function (req, res) {
                 // console.log(resq[0]);
             }
 
-            res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "dashboard" });
+            var user_data = {
+                height: resq[0].height,
+                weight: resq[0].weight,
+                gender: resq[0].gender,
+                birth_date: resq[0].birth_date
+            };
+
+            // if (user_data.height == null || user_data.weight == null || user_data.gender == null || user_data.birth_date == null) 
+            //     res.redirect("/complete-register");
+
+            res.render("pages/index", { id: req.session.userid, user: req.session.user, found: req.session.found, user_data: user_data, page: "dashboard" });
         });
     }
     else {
@@ -68,11 +78,22 @@ app.get("/update-details", function(req, res) {
                 // console.log(resq[0]);
             }
 
-            res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "details" });
+            var user_data = {
+                height: resq[0].height,
+                weight: resq[0].weight,
+                gender: resq[0].gender,
+                birth_date: resq[0].birth_date
+            };
+
+            // if (user_data.height == null || user_data.weight == null || user_data.gender == null || user_data.birth_date == null) 
+            //     res.redirect("/complete-register");
+
+            // res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "details" });
+            res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_data: user_data, page: "details" });
         });
     }
     else {
-        res.redirect("/index");
+        res.redirect("/login");
     }
 });
 
@@ -420,6 +441,20 @@ app.post("/register", function (req, res) {
     var user = req.body.username;
     var email = req.body.email;
     var encpass = crypto.scryptSync(req.body.password, "iewhrg3yYYDAjert377999", 32).toString('hex');
+
+    query_check = `
+    SELECT * FROM users
+    where username = "${user}"
+    `;
+
+    database.query(query_check, function (err, resq) {
+        if (err) throw err;
+            if (resq.length > 0) {
+                console.log("username taken error");
+                // res.redirect("/index");
+                // res.render("pages/register", { response: "username_taken" });
+            }
+    });
 
     query = `
     INSERT INTO users (username, email, password)

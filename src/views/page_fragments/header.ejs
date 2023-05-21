@@ -1,21 +1,27 @@
-<div id="title-bar">
-    <% if (!locals.user) { %>
+<% if (!locals.user) { %>
+    <div id="title-bar-logged-out">
         <nav id="login-register-buttons">
             <ul>
                 <li id="login-button"><a href="../login">Log In</a></li>
                 <li id="register-button"><a href="../register">Register</a></li>
             </ul>
         </nav>
-    <% } else { %>
+        <a href="../index">
+            <h1>DTPlan</h1>
+            <h4>Personalized diet and workout plans</h4>
+        </a>
+    </div>
+<% } else { %>
+    <div id="title-bar-logged-in">
         <p id="welcome-message">Welcome back, <%- locals.user %>. <a href="../logout" style="color: white">Log out</a>.</p>
         <img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg">
-    <% } %>
-
-    <a href="../index">
-        <h1>DTPlan</h1>
-        <h4>Personalized diet and workout plans</h4>
-    </a>
-</div>
+        <a href="../logout" id="logout-button">Logout</a>
+        <a href="../index">
+            <h1>DTPlan</h1>
+            <h4>Personalized diet and workout plans</h4>
+        </a>
+    </div>
+<% } %>
 
 <% if(locals.user) { %>
     <div>

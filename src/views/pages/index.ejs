@@ -33,9 +33,9 @@
                             <h2>My details</h2>
                             
                             <p class="dashboard-row"><span class="dashboard-left-column">Username</span> <span class="dashboard-right-column"><%- locals.user %></span></p>
-                            <p class="dashboard-row"><span class="dashboard-left-column">Height</span> <span class="dashboard-right-column"><%- locals.user_height %><span class="dashboard-unit">cm</span></span></p>
-                            <p class="dashboard-row"><span class="dashboard-left-column">Weight</span> <span class="dashboard-right-column"><%- locals.user_weight %><span class="dashboard-unit">kg</span></span></p>
-                            <p class="dashboard-row"><span class="dashboard-left-column">Gender</span> <span class="dashboard-right-column"><% if (locals.user_gender == 1) { %> Male <% } else { %> Female <% } %></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Height</span> <span class="dashboard-right-column"><%- locals.user_data.height %><span class="dashboard-unit">cm</span></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Weight</span> <span class="dashboard-right-column"><%- locals.user_data.weight %><span class="dashboard-unit">kg</span></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Gender</span> <span class="dashboard-right-column"><% if (locals.user_data.gender == 1) { %> Male <% } else { %> Female <% } %></span></p>
                             
                             <a href="/update-details" class="dashboard-button">Update details</a>
                         </div>

@@ -1,5 +1,5 @@
 var mySwiper = new Swiper('.container', {
-  slidesPerView : 2,
+  slidesPerView : 'auto',
   centeredSlides : true,
   longSwipes: false,
   effect: "coverflow",
@@ -10,26 +10,26 @@ var mySwiper = new Swiper('.container', {
     stretch: 0,
     depth: 100,
     modifier: 3,
-    slideShadows: true
+    slideShadows: false
   },
   pagination: {
     el: ".swiper-pagination",
     clickable: true
   },
-  breakpoints: {
-    640: {
-      slidesPerView: 2
-    },
-    768: {
-      slidesPerView: 1
-    },
-    1024: {
-      slidesPerView: 2
-    },
-    1560: {
-      slidesPerView: 3
-    }
-  },
+  // breakpoints: {
+  //   640: {
+  //     slidesPerView: 2
+  //   },
+  //   768: {
+  //     slidesPerView: 1
+  //   },
+  //   1024: {
+  //     slidesPerView: 2
+  //   },
+  //   1560: {
+  //     slidesPerView: 3
+  //   }
+  // },
   pagination: {
     el: '.swiper-pagination',
     clickable: true,

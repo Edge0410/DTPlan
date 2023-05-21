@@ -11,23 +11,23 @@
         </header>
 
         <main>
-            <div id="container-details">
+            <div id="container-dashboard-form">
                 <h2>My details</h2>
                 <form method="post" action="/save-updated-details" class="centered dashboard-form">
                     <label>
                         <!-- <h5 class="centered">Username</h5> -->
                         <!-- <i class="fa-solid fa-user"></i> -->
-                        <input type="text" name="username" placeholder="Username" required/>
+                        <input type="text" name="username" placeholder="Username" value="<%= locals.user ? user: '' %>" maxlength="15" required/>
                     </label>
                     <br/>
                     <label>
                         <!-- <h5 class="centered">Inaltime (in cm)</h5> -->
-                        <input type="number" name="height" placeholder="Height (in cm)" required/> <!--value="170"-->
+                        <input type="number" name="height" placeholder="Height (in cm)" value="<%= locals.user_data.height ? user_data.height: '' %>" required/> <!--value="170"-->
                     </label>
                     <br/>
                     <label>
                         <!-- <h5 class="centered">Greutate (in Kg)</h5> -->
-                        <input type="number" name="weight" placeholder="Weight (in kg)" required/> <!--value="65" -->
+                        <input type="number" name="weight" placeholder="Weight (in kg)" value="<%= locals.user_data.weight ? user_data.weight: '' %>" required/> <!--value="65" -->
                     </label>
                     <br/> 
                     <label>
@@ -43,7 +43,7 @@
                     <!-- <br/> -->
                     <label>
                         <!-- <h5 class="centered">Date of birth:</h5> -->
-                        <input type="text" name="birthday" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')"> <!--value="2002-10-05"-->
+                        <input type="text" name="birthday" placeholder="Date of Birth" value="<%= locals.user_data.birth_date ? user_data.birth_date: '' %>" onfocus="(this.type='date')" onblur="(this.type='text')"> <!--value="2002-10-05"-->
                     </label>
                     <br/>
                     <a href="/index" class="form-cancel-button">Cancel</a>

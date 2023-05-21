@@ -10,11 +10,18 @@
             <!-- <h3 class="centered">Register</h3> -->
             <div class="centered">
                 <h1><a href="../index" style="text-decoration: none;">DTPlan</a></h1>
+                <% if (locals.response == "username_taken") { %>
+                    <h5 class="centered" style="color: red">Username already taken!</h5>
+                <% } %>
                 <form method="post" action="/register">
                     <label>
                         <!-- <h5 class="centered">Username</h5> -->
                         <!-- <i class="fa-solid fa-user"></i> -->
-                        <input type="text" name="username" placeholder="Username" required/>
+                        <% if (locals.response == "username_taken") { %>
+                            <input type="text" name="username" placeholder="Username" maxlength="15" style="color: red; border: 1px solid red;" required/>
+                        <% } else { %>
+                            <input type="text" name="username" placeholder="Username" maxlength="15" required/>
+                        <% } %>
                     </label>
                     <br/>
                     <label>

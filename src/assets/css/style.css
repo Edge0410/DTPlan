@@ -29,12 +29,14 @@ footer {
     width: 100%;
     height: 60px;
 
-    display: flex; /* create a flexbox layout */
-    align-items: center; /* center the text vertically */
+    display: flex;
+    /* create a flexbox layout */
+    align-items: center;
+    /* center the text vertically */
 
     position: absolute;
     bottom: 0;
-    
+
     color: #777777;
     text-align: center;
 }
@@ -79,7 +81,7 @@ a {
     color: #000000;
 }
 
-#dashboard-navbar { 
+#dashboard-navbar {
     /* position: absolute; */
     width: auto;
     height: 51px;
@@ -134,13 +136,15 @@ a {
     } */
 }
 
-#title-bar {
+#title-bar-logged-out,
+#title-bar-logged-in {
     width: 100%;
     height: 120px;
     background-color: #222222;
 }
 
-#title-bar h1 {
+#title-bar-logged-out h1,
+#title-bar-logged-in h1 {
     margin: 0px;
 
     position: absolute;
@@ -150,12 +154,13 @@ a {
     color: #FFFFFF;
 }
 
-#title-bar h4 {
+#title-bar-logged-out h4,
+#title-bar-logged-in h4 {
     margin: 0px;
 
     position: absolute;
     left: 30px;
-    top: 74px; 
+    top: 74px;
 
     color: #FFFFFF;
     font-weight: 300;
@@ -244,24 +249,130 @@ a {
     top: 25px;
 }
 
-@media screen and (max-width: 800px) {
-    #title-bar {
+#logout-button {
+    display: none;
+}
+
+@media screen and (max-width: 1000px) {
+    #title-bar-logged-out {
+        height: 143px;
+    }
+
+    #title-bar-logged-in {
         height: 94px;
+    }
+
+    #title-bar-logged-out h1 {
+        top: 75px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #title-bar-logged-in h1 {
+        left: 13px;
+    }
+
+    #title-bar-logged-out h4,
+    #title-bar-logged-in h4 {
+        display: none;
+    }
+
+    #welcome-message {
+        display: none;
+    }
+
+    #profile-picture {
+        display: none;
+    }
+
+    #login-register-buttons {
+        position: absolute;
+        width: auto;
+        height: 40px;
+        left: 30px;
+        right: 30px;
+        top: 17px;
+    }
+    
+    #login-register-buttons ul {
+        display: flex;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #login-register-buttons li {
+        width: 100%;
+        height: 40px;
+    
+        list-style-type: none;
+        color: #000000;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 40px;
+        text-align: center;
+    }
+    
+    #login-register-buttons a {
+        display: block;
+        text-decoration: none;
+    }
+
+    #login-button {
+        margin-right: 15px;
+    }
+
+    #register-button {
+        position: unset;
+        left: unset;
+
+        margin-left: 15px;
+    }
+
+    #logout-button {
+        display: block;
+
+        position: absolute;
+        width: 133px;
+        height: 40px;
+        right: 13px;
+        top: 27px;
+
+        background: #EEEEEE;
+        border-radius: 20px;
+
+        transition: background 0.2s ease-in-out;
+
+        text-decoration: none;
+        color: #000000;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 40px;
+        text-align: center;
+    }
+
+    #logout-button:hover {
+        background: hsl(0, 0%, 70%);
     }
 }
 
 form {
     padding: 10px;
 
-    font-family: rubik-variable;
-    font-weight: 400;
-    font-size: 20px;
-
     /* margin-bottom: 50px !important; */
 }
 
-form input[type="text"], form input[type="password"], form input[type="number"], form input[type="date"]
-{
+form input,
+form button,
+form select {
+    font-family: rubik-variable;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="number"],
+form input[type="date"] {
     margin: 8px;
     padding-left: 10px;
     padding-right: 10px;
@@ -271,12 +382,10 @@ form input[type="text"], form input[type="password"], form input[type="number"],
     background: #FFFFFF;
     border: 1px solid #777777;
     border-radius: 8px;
-
-    font-weight: 400;
-    font-size: 20px;
 }
 
-form > input[type="submit"], form button[type="submit"]{
+form>input[type="submit"],
+form button[type="submit"] {
     margin: 8px;
     width: 284px;
     height: 46px;
@@ -286,8 +395,6 @@ form > input[type="submit"], form button[type="submit"]{
     border-radius: 8px;
 
     color: #FFFFFF;
-    font-weight: 400;
-    font-size: 20px;
 
     cursor: pointer;
 }
@@ -302,12 +409,9 @@ form select {
     background: #FFFFFF;
     border: 1px solid #777777;
     border-radius: 8px;
-
-    font-weight: 400;
-    font-size: 20px;
 }
 
-form button[type="submit"]:hover{
+form button[type="submit"]:hover {
     background-color: #FFFFFF;
     color: #000000;
 }
@@ -329,7 +433,7 @@ form button[type="submit"]:hover{
 
     grid-template-columns: 1fr 1.3fr 1.3fr;
     /* grid-template-rows: 296px 220px; */
-    grid-template-areas: 
+    grid-template-areas:
         "area-dds area-ddps area-dwps"
         "area-dgs area-ddps area-dwps";
 }
@@ -358,6 +462,19 @@ form button[type="submit"]:hover{
 
 #dashboard-workout-plans-section {
     grid-area: area-dwps;
+}
+
+
+
+@media screen and (max-width: 1250px) {
+    #container-dashboard {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "area-dds"
+            "area-dgs"
+            "area-ddps"
+            "area-dwps";
+    }
 }
 
 .dashboard-row {
@@ -407,7 +524,7 @@ form button[type="submit"]:hover{
     color: #FFFFFF;
 }
 
-#container-details {
+#container-dashboard-form {
     background: #EEEEEE;
     border-radius: 8px;
 
@@ -421,14 +538,17 @@ form.dashboard-form {
     padding-bottom: 0px;
 }
 
-form.dashboard-form input[type="text"], form.dashboard-form input[type="password"], form.dashboard-form input[type="number"], form.dashboard-form input[type="date"]
-{
+form.dashboard-form input[type="text"],
+form.dashboard-form input[type="password"],
+form.dashboard-form input[type="number"],
+form.dashboard-form input[type="date"] {
     width: 264px;
     border: 0px;
     text-align: center;
 }
 
-form.dashboard-form > input[type="submit"], form.dashboard-form button[type="submit"]{
+form.dashboard-form>input[type="submit"],
+form.dashboard-form button[type="submit"] {
     background: #EEEEEE;
     border: 3px solid #16ADD8;
 
@@ -441,7 +561,7 @@ form.dashboard-form select {
     text-align: center;
 }
 
-form.dashboard-form button[type="submit"]:hover{
+form.dashboard-form button[type="submit"]:hover {
     background-color: #16ADD8;
     color: #FFFFFF;
 }
@@ -451,7 +571,7 @@ form.dashboard-form button[type="submit"]:hover{
 
     margin-top: 8px;
     margin-bottom: 8px;
-    width: 284px;
+    width: 278px;
     height: 40px;
 
     border: 3px solid #777777;
@@ -468,6 +588,31 @@ form.dashboard-form button[type="submit"]:hover{
 .form-cancel-button:hover {
     background: #777777;
     color: #FFFFFF;
+}
+
+@media screen and (max-width: 420px) {
+    form.dashboard-form input[type="text"],
+    form.dashboard-form input[type="password"],
+    form.dashboard-form input[type="number"],
+    form.dashboard-form input[type="date"],
+    form.dashboard-form>input[type="submit"],
+    form.dashboard-form button[type="submit"],
+    form.dashboard-form select,
+    .form-cancel-button {
+        width: 100%;
+        margin: 8px auto;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .form-cancel-button {
+        width: 96%;
+    }
+}
+
+#container-plans {
+    margin: 30px;
+    margin-top: 24px;
 }
 
 .centered {
@@ -496,12 +641,11 @@ form.dashboard-form button[type="submit"]:hover{
     justify-content: center;
 }
 
-.container-plans::-webkit-scrollbar{
+.container-plans::-webkit-scrollbar {
     display: none;
 }
 
-.plan-data
-{
+.plan-data {
     display: flex;
     justify-content: center;
     /*margin: 10px;*/
@@ -519,18 +663,15 @@ form.dashboard-form button[type="submit"]:hover{
     transition: all 0.2s;
 }
 
-.plan-data:nth-of-type(3n+1)
-{
+.plan-data:nth-of-type(3n+1) {
     background-image: url(../images/data-diet.jpg)
 }
 
-.plan-data:nth-of-type(3n+2)
-{
+.plan-data:nth-of-type(3n+2) {
     background-image: url(../images/data-diet3.jpg)
 }
 
-.plan-data-workout
-{
+.plan-data-workout {
     display: flex;
     justify-content: center;
     /*margin: 10px;*/
@@ -548,26 +689,26 @@ form.dashboard-form button[type="submit"]:hover{
     transition: all 0.2s;
 }
 
-.plan-data-workout:nth-of-type(3n+1)
-{
+.plan-data-workout:nth-of-type(3n+1) {
     background-image: url(../images/plan-muscle10.jpg)
 }
 
-.plan-data-workout:nth-of-type(3n+2)
-{
+.plan-data-workout:nth-of-type(3n+2) {
     background-image: url(../images/plan-muscle3.jpg)
 }
 
-.plan-data:hover , .plan-data-workout:hover{
-    box-shadow: 4px 4px 4px 0 gray; 
+.plan-data:hover,
+.plan-data-workout:hover {
+    box-shadow: 4px 4px 4px 0 gray;
 }
 
-.plan-desc{
+.plan-desc {
     display: block;
     flex-grow: 6;
 }
 
-#left-plan, #right-plan{
+#left-plan,
+#right-plan {
     display: none;
     cursor: pointer;
     padding: 10px;
@@ -578,11 +719,10 @@ form.dashboard-form button[type="submit"]:hover{
     font-size: 100px;
 }
 
-.plan-button
-{
+.plan-button {
     cursor: pointer;
     padding: 10px;
-    background-color: blue;
+    background-color: #16add8;
     margin-bottom: 10px;
     color: white;
     border: 1px solid black;
@@ -590,14 +730,13 @@ form.dashboard-form button[type="submit"]:hover{
     text-decoration: none;
 }
 
-.plan-button:hover{
+.plan-button:hover {
     color: black;
     background-color: white;
     font-weight: bold;
 }
 
-.diet-data
-{
+.diet-data {
     display: flex;
     margin: auto;
     margin-bottom: 20px;
@@ -615,23 +754,20 @@ form.dashboard-form button[type="submit"]:hover{
     transition: all 0.2s;
 }
 
-.container .diet-data:nth-child(3n+1)
-{
+.container .diet-data:nth-child(3n+1) {
     background-image: url(../images/data-diet2.jpg)
 }
 
-.container .diet-data:nth-child(3n+2)
-{
+.container .diet-data:nth-child(3n+2) {
     background-image: url(../images/data-diet3.jpg)
 }
 
-.diet-data:hover{
-    box-shadow: 4px 4px 4px 0 gray; 
+.diet-data:hover {
+    box-shadow: 4px 4px 4px 0 gray;
     transform: scale(1.05);
 }
 
-.workout-data
-{
+.workout-data {
     display: flex;
     margin: auto;
     margin-bottom: 20px;
@@ -649,35 +785,33 @@ form.dashboard-form button[type="submit"]:hover{
     transition: all 0.2s;
 }
 
-.container .workout-data:nth-child(3n+1)
-{
+.container .workout-data:nth-child(3n+1) {
     background-image: url(../images/plan-muscle4.jpg)
 }
 
-.container .workout-data:nth-child(3n+2)
-{
+.container .workout-data:nth-child(3n+2) {
     background-image: url(../images/plan-muscle5.jpg)
 }
 
-.workout-data:hover{
-    box-shadow: 4px 4px 4px 0 gray; 
+.workout-data:hover {
+    box-shadow: 4px 4px 4px 0 gray;
     transform: scale(1.05);
 }
 
-.diet-desc{
+.diet-desc {
     display: block;
     flex-grow: 6;
 }
 
-button.plan-submit-button[value="0"]{
+button.plan-submit-button[value="0"] {
     color: red;
 }
 
-button.plan-submit-button[value="1"]{
+button.plan-submit-button[value="1"] {
     color: green;
 }
 
-.container-index{
+.container-index {
     display: flex;
     align-items: center;
     position: relative;
@@ -688,14 +822,14 @@ button.plan-submit-button[value="1"]{
     min-height: 540px;
 }
 
-.banner{
+.banner {
     display: block;
     margin: auto;
     width: 45%;
     height: 80%;
 }
 
-.banner .login-add{
+.banner .login-add {
     display: block;
     text-align: center;
     font-family: rubik;
@@ -703,15 +837,14 @@ button.plan-submit-button[value="1"]{
     font-weight: bold;
 }
 
-.banner-login{
+.banner-login {
     display: block;
     margin: auto;
     width: 45%;
     height: 80%;
 }
 
-.plan-button-banner
-{
+.plan-button-banner {
     display: block;
     margin: auto;
     margin-top: 30px;
@@ -726,7 +859,7 @@ button.plan-submit-button[value="1"]{
     text-decoration: none;
 }
 
-.plan-button-simple{
+.plan-button-simple {
     display: block;
     margin: auto;
     margin-top: 30px;
@@ -739,29 +872,30 @@ button.plan-submit-button[value="1"]{
     font-weight: bold;
     border-radius: 5px;
     text-decoration: none;
-    background-color: blue;
+    background-color: #16add8;
 }
 
-.plan-button-banner:nth-of-type(1){
+.plan-button-banner:nth-of-type(1) {
     background-image: url(../images/data-diet2.jpg);
 }
 
-.plan-button-banner:nth-of-type(2){
+.plan-button-banner:nth-of-type(2) {
     background-image: url(../images/plan-muscle5.jpg);
 }
 
-.plan-button-banner:nth-of-type(3){
-    background-color: blue;
+.plan-button-banner:nth-of-type(3) {
+    background-color: #16add8;
 }
 
-.plan-button-banner:hover, .plan-button-simple:hover{
+.plan-button-banner:hover,
+.plan-button-simple:hover {
     color: black;
     background-image: none;
     background-color: white;
     font-weight: bold;
 }
 
-.banner img{
+.banner img {
     float: right;
     width: 50%;
     height: 500px;
