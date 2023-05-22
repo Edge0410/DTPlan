@@ -34,9 +34,9 @@
                         <!-- <br/> -->
                         <!-- <label for="gender"> <h5 class="centered">Gender:</h5> </label> -->
                         <select name="gender">
-                            <option value="" disabled selected>Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="" disabled <%= locals.user_data.gender == null ? 'selected': '' %>>Gender</option>
+                            <option value="male" <%= locals.user_data.gender == 1 ? 'selected': '' %>>Male</option>
+                            <option value="female" <%= locals.user_data.gender == 0 ? 'selected': '' %>>Female</option>
                         </select>
                     </label>    
                     <br/>

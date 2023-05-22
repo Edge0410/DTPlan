@@ -38,14 +38,20 @@
                             <p class="dashboard-row"><span class="dashboard-left-column">Username</span> <span class="dashboard-right-column"><%- locals.user %></span></p>
                             <p class="dashboard-row"><span class="dashboard-left-column">Height</span> <span class="dashboard-right-column"><%- locals.user_data.height %><span class="dashboard-unit">cm</span></span></p>
                             <p class="dashboard-row"><span class="dashboard-left-column">Weight</span> <span class="dashboard-right-column"><%- locals.user_data.weight %><span class="dashboard-unit">kg</span></span></p>
-                            <p class="dashboard-row"><span class="dashboard-left-column">Gender</span> <span class="dashboard-right-column"><% if (locals.user_data.gender == 1) { %> Male <% } else { %> Female <% } %></span></p>
-                            
+                            <p class="dashboard-row"><span class="dashboard-left-column">Gender</span> <span class="dashboard-right-column"><% if (locals.user_data.gender == 1) { %> Male <% } else if (locals.user_data.gender == 0) { %> Female <% } else { %> Not set <% } %></span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Age</span> <span class="dashboard-right-column"><%- locals.user_data.age %></span></p>
+
                             <a href="/update-details" class="dashboard-button">Update details</a>
                         </div>
 
                         <div id="dashboard-goals-section">
                             <h2>My goals</h2>
-                            <h4>Coming soon!</h4>
+                            <!-- <h4>Coming soon!</h4> -->
+
+                            <p class="dashboard-row"><span class="dashboard-right-column" style="float: unset;"><% if (locals.user_data.goal == 0) { %> Lose weight <% } else if (locals.user_data.goal == 1) { %> Build muscle <% } else { %> Goal not set <% } %> </span></p>
+                            <p class="dashboard-row"><span class="dashboard-left-column">Weight</span> <span class="dashboard-right-column"><%- locals.user_data.weight_goal %><span class="dashboard-unit">kg</span></span></p>
+
+                            <a href="/update-goals" class="dashboard-button">Update goals</a>
                         </div>
 
                         <div id="dashboard-diet-plans-section">

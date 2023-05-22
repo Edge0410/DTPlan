@@ -36,9 +36,30 @@
                     <label>
                         <!-- <h5 class="centered">Date of birth:</h5> -->
                         <input type="text" name="birthday" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')"> <!--value="2002-10-05"-->
-                        <label>
+                    </label>
                     <br/>
-                    <button type="submit" value="submit">Update profile</button>
+                    <label>
+                        <select name="activity_level">
+                            <option value="" disabled selected>How active are you?</option>
+                            <option value="0">I am a sedentary person and I rarely go for walks</option>
+                            <option value="1">Sometimes I enjoy walks but I am not really into sports</option>
+                            <option value="2">I love playing sports but I am a bit out of shape</option>
+                            <option value="3">I always make time for gym and I am actively involved into the sport life</option>  
+                        </select>
+                    </label>
+                    <label>
+                        <select name="goal">
+                            <option value="" disabled selected>Goal</option>
+                            <option value="weight">Lose weight</option>
+                            <option value="muscle">Build muscle</option>
+                        </select>
+                    </label>
+                    <br/>
+                    <label>
+                        <input type="number" name="weight_goal" placeholder="Weight goal (in kg)" required/>
+                    </label>
+                    <br/>
+                    <button type="submit" value="submit">Complete registration</button>
                 </form>
             </div>
         </main>
