@@ -5,6 +5,7 @@
 <head>
     <%- include("../page_fragments/head.ejs") %>
         <script src="/assets/js/script.js"></script>
+        <script src="node_modules/pdf-lib/dist/pdf-lib.js"></script>
 </head>
 
 <body>
@@ -17,8 +18,11 @@
             <div class="container" style="flex-direction: column;">
                 
             </div>
+            <form id="manage-diet-plan" class="centered dashboard-form">
+                <button type="submit" name="submit" class="plan-submit-button" style="background-color: white;">Download plan as PDF</button><br>
+                
+            </form>
             <form action="/manage-diet-plan" id="manage-diet-plan" class="centered dashboard-form" method="post">
-                <button type="submit" name="submit" value="1" class="plan-submit-button" style="background-color: white;">Download plan as PDF</button><br>
                 <button type="submit" name="submit" value="0" class="plan-submit-button plan-discard-button" style="background-color: white;">Delete plan</button>
             </form>
         </div>
@@ -33,5 +37,52 @@
         const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-diet-plan/data");
     });
 </script>
-
+<script type="module">
+    import { PDFDocument } from 'pdf-lib';
+    const downloadPDF = async () => {
+      try {
+        console.log("Here");
+        // Fetch the current page as a blob
+        const response = await fetch(window.location.href);
+        const pageContent = await response.blob();
+    
+        // Create a PDF document
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.insertPage(0);
+        
+        // Load the page content into the PDF document
+        const pageContentArrayBuffer = await pageContent.arrayBuffer();
+        const pageImage = await pdfDoc.embedPng(pageContentArrayBuffer);
+        page.drawImage(pageImage, {
+          x: 0,
+          y: 0,
+          width: page.getWidth(),
+          height: page.getHeight(),
+        });
+    
+        // Save the PDF as a blob
+        const pdfBytes = await pdfDoc.save();
+        const pdfBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+    
+        // Trigger the download of the PDF
+        const downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(pdfBlob);
+        downloadLink.download = 'page.pdf'; // Specify the desired file name
+        downloadLink.click();
+    
+        console.log('PDF saved successfully!');
+      } catch (error) {
+        console.error('An error occurred:', error);
+      }
+    };
+    const handleFormSubmit = (event) => {
+      event.preventDefault(); // Prevent the default form submission behavior
+    
+      // Your logic to handle the form submission
+      // Call the desired function or perform any necessary actions here
+      downloadPDF();
+    };
+        const form = document.getElementById('manage-diet-plan');
+        form.addEventListener('submit', handleFormSubmit);
+    </script>
 </html>
