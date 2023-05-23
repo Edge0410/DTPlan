@@ -46,7 +46,13 @@
     document.getElementById('download-button').addEventListener('click', function() {
     const doc = new jsPDF();
     let user = '<%- locals.user %>';
-    doc.text('DTPlan', 10, 10);
+    let initialDiv = document.getElementById("container-plans");
+    var div = initialDiv.cloneNode(true);
+    var formElement = div.querySelector('form');
+    div.removeChild(formElement);
+    formElement = div.querySelector('form');
+    div.removeChild(formElement);
+    doc.fromHTML(`<html><head><title>${"DTPlan"}</title></head><body>` + div.innerHTML + `</body></html>`);
 
     doc.save('DTPlan - Diet plan for ' + user);
   });
