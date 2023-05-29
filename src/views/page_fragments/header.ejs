@@ -15,7 +15,7 @@
     <div id="title-bar-logged-in">
         <p id="welcome-message">Welcome back, <%- locals.user %>. <a href="../logout" style="color: white">Log out</a>.</p>
         <img id="profile-picture" src="../../assets/icons/profile_picture_placeholder.svg">
-        <a href="../logout" id="logout-button">Logout</a>
+        <a href="../logout" id="logout-button">Log Out</a>
         <a href="../index">
             <h1>DTPlan</h1>
             <h4>Personalized diet and workout plans</h4>
@@ -37,7 +37,11 @@
                 <% } else { %>
                     <li><a href="../update-details"><img src="../../assets/icons/details_icon.svg">Details</a></li>
                 <% } %>
-                <li><a href="../index"><img src="../../assets/icons/goals_icon.svg">Goals</a></li>
+                <% if (locals.page == "goals") { %>
+                    <li><a href="../update-goals"><img src="../../assets/icons/goals_icon_highlighted.svg"><span style="color: #16add8;">Goals</span></a></li>
+                <% } else { %>
+                    <li><a href="../update-goals"><img src="../../assets/icons/goals_icon.svg">Goals</a></li>
+                <% } %>
                 <% if (locals.page == "diet-plans") { %>
                     <li><a href="../diet-plans"><img src="../../assets/icons/diet_plans_icon_highlighted.svg"><span style="color: #16add8;">Diet Plans</span></a></li>
                 <% } else { %>

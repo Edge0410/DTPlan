@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const cors = require('cors')
 const session = require('express-session');
 const url = require('url');
+const moment = require('moment/moment');
 
 var database = require('./database');
 const { parse } = require('path');
@@ -18,6 +19,13 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true })); // creeaza req.body pentru formular ca sa nu mai fie in url parametrii din post
 
 app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false })); // req.session
+
+function diff_years(dateStr) {
+    var date = new Date(dateStr);
+    var diff = (Date.now() - date.getTime()) / 1000;
+    diff /= (60 * 60 * 24);
+    return Math.abs(Math.round(diff / 365.25));
+}
 
 app.get(["/", "/index"], function (req, res) {
     console.log(req.session.userid);
@@ -38,11 +46,16 @@ app.get(["/", "/index"], function (req, res) {
                 // console.log(resq[0]);
             }
 
+            var age = diff_years(resq[0].birth_date);
+
             var user_data = {
                 height: resq[0].height,
                 weight: resq[0].weight,
                 gender: resq[0].gender,
-                birth_date: resq[0].birth_date
+                birth_date: resq[0].birth_date,
+                age: age,
+                goal: resq[0].goal,
+                weight_goal: resq[0].weight_goal
             };
 
             // if (user_data.height == null || user_data.weight == null || user_data.gender == null || user_data.birth_date == null) 
@@ -82,7 +95,7 @@ app.get("/update-details", function (req, res) {
                 height: resq[0].height,
                 weight: resq[0].weight,
                 gender: resq[0].gender,
-                birth_date: resq[0].birth_date
+                birth_date: moment(resq[0].birth_date).format("YYYY-MM-DD")
             };
 
             // if (user_data.height == null || user_data.weight == null || user_data.gender == null || user_data.birth_date == null) 
@@ -90,6 +103,40 @@ app.get("/update-details", function (req, res) {
 
             // res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "details" });
             res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_data: user_data, page: "details" });
+        });
+    }
+    else {
+        res.redirect("/login");
+    }
+});
+
+app.get("/update-goals", function (req, res) {
+    if (req.session.found === 1) {
+        console.log("logged in, fetching user details");
+        console.log("user id follows:");
+        console.log(req.session.userid);
+
+        query = `SELECT * FROM users WHERE id = "${req.session.userid}"`;
+
+        database.query(query, function (err, resq) {
+            if (err) {
+                console.log("error fetching");
+            }
+            else {
+                console.log("fetch succesful")
+                // console.log(resq[0]);
+            }
+
+            var user_data = {
+                goal: resq[0].goal,
+                weight_goal: resq[0].weight_goal
+            };
+
+            // if (user_data.height == null || user_data.weight == null || user_data.gender == null || user_data.birth_date == null) 
+            //     res.redirect("/complete-register");
+
+            // res.render("pages/update-details", { id: req.session.userid, user: req.session.user, found: req.session.found, user_height: resq[0].height, user_weight: resq[0].weight, user_gender: resq[0].gender, page: "details" });
+            res.render("pages/update-goals", { id: req.session.userid, user: req.session.user, found: req.session.found, user_data: user_data, page: "goals" });
         });
     }
     else {
@@ -327,7 +374,9 @@ app.get(["/create-diet-plan", "/create-workout-plan"], function (req, res) {
                 height: resq[0].height,
                 weight: resq[0].weight,
                 gender: resq[0].gender,
-                birth_date: resq[0].birth_date
+                birth_date: resq[0].birth_date,
+                activity_level: resq[0].activity_level,
+                goal: resq[0].goal
             };
 
             res.render("pages" + req.url, { id: req.session.userid, user: req.session.user, found: req.session.found, user_data: user_data }, function (err, rezrand) {
@@ -463,6 +512,28 @@ app.post("/save-updated-details", function (req, res) {
     res.redirect("/index");
 });
 
+app.post("/save-updated-goals", function (req, res) {
+    var goal = req.body.goal;
+    var weight_goal = req.body.weight_goal;
+
+    var intgoal;
+    if (goal == "weight")
+        intgoal = 0;
+    else
+        intgoal = 1;
+
+    query = `UPDATE users 
+    set goal = "${intgoal}", weight_goal = ${weight_goal}
+    where id = ${req.session.userid};`
+
+    database.query(query, function (err, resq) {
+        if (err) throw err;
+        console.log(resq.affectedRows);
+    });
+
+    res.redirect("/index");
+});
+
 app.post("/complete-register", function (req, res) {
     console.log(req.body);
     var weight = req.body.weight;
@@ -471,14 +542,23 @@ app.post("/complete-register", function (req, res) {
     var birth_date = new String(req.body.birthday);
     console.log(birth_date);
     var intgender;
+    var activity_level = req.body.activity_level;
+    var goal = req.body.goal;
+    var weight_goal = req.body.weight_goal;
+
     if (gender == "male")
         intgender = 1;
     else
         intgender = 0;
 
+    var intgoal;
+    if (goal == "weight")
+        intgoal = 0;
+    else
+        intgoal = 1;
 
     query = `UPDATE users 
-    set weight = ${weight}, height = ${height}, gender = ${intgender}, birth_date = STR_TO_DATE('${birth_date}', '%Y-%m-%d')
+    set weight = ${weight}, height = ${height}, gender = ${intgender}, birth_date = STR_TO_DATE('${birth_date}', '%Y-%m-%d'), activity_level = "${activity_level}", goal = "${intgoal}", weight_goal = ${weight_goal}
     where id = ${req.session.userid};`
 
     database.query(query, function (err, resq) {
@@ -532,13 +612,6 @@ app.post("/register", function (req, res) {
         res.redirect("/complete-register");
     })
 });
-
-function diff_years(dateStr) {
-    var date = new Date(dateStr);
-    var diff = (Date.now() - date.getTime()) / 1000;
-    diff /= (60 * 60 * 24);
-    return Math.abs(Math.round(diff / 365.25));
-}
 
 app.post("/create-plan", async function (req, res) {
     console.log(req.body);

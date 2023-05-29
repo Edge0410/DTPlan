@@ -33,19 +33,19 @@
                         <h4 class="centered">Age</h4>
                         <input type="number" name="age" value="20" required/>
                     </label> -->
-                    <br/>
+                    <!-- <br/> -->
                     <h4 class="centered">What is your daily routine?</h4>
                         <select id="routine" name="routine" form="create-plan-form">
-                            <option value="0">I am a sedentary person and I rarely go for walks</option>
-                            <option value="1">Sometimes I enjoy walks but I am not really into sports</option>
-                            <option value="2">I love playing sports but I am a bit out of shape</option>
-                            <option value="3">I always make time for gym and I am actively involved into the sport life</option>  
+                            <option value="0" <%= locals.user_data.activity_level == 0 ? 'selected': '' %>>I am a sedentary person and I rarely go for walks</option>
+                            <option value="1" <%= locals.user_data.activity_level == 1 ? 'selected': '' %>>Sometimes I enjoy walks but I am not really into sports</option>
+                            <option value="2" <%= locals.user_data.activity_level == 2 ? 'selected': '' %>>I love playing sports but I am a bit out of shape</option>
+                            <option value="3" <%= locals.user_data.activity_level == 3 ? 'selected': '' %>>I always make time for gym and I am actively involved into the sport life</option>  
                         </select>
                     </br>
                     <h4 class="centered">What is your ultimate goal?</h4>
                         <select id="goal" name="goal" form="create-plan-form">
-                            <option value="0">Lose weight & maintain a healthy diet</option>  
-                            <option value="1">Gain weight & muscle mass</option>
+                            <option value="0" <%= locals.user_data.goal == 0 ? 'selected': '' %>>Lose weight & maintain a healthy diet</option>  
+                            <option value="1" <%= locals.user_data.goal == 1 ? 'selected': '' %>>Gain weight & muscle mass</option>
                         </select>
                     </br>
                     <button type="submit" value="submit">Create plan</button>
