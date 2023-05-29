@@ -4,7 +4,8 @@
 
 <head>
     <%- include("../page_fragments/head.ejs") %>
-        <script src="/assets/js/script.js"></script>
+    <script src="/assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
 </head>
 
 <body>
@@ -17,8 +18,12 @@
             <div class="container" style="flex-direction: column;">
                 
             </div>
+
+            <form action="" class="centered dashboard-form" id="download-form">
+                <button type="submit" name="submit" class="plan-submit-button" style="background-color: white;" id="download-button">Download plan as PDF</button><br>
+            </form>
+
             <form action="/manage-diet-plan" id="manage-diet-plan" class="centered dashboard-form" method="post">
-                <button type="submit" name="submit" value="1" class="plan-submit-button" style="background-color: white;">Download plan as PDF</button><br>
                 <button type="submit" name="submit" value="0" class="plan-submit-button plan-discard-button" style="background-color: white;">Delete plan</button>
             </form>
         </div>
@@ -32,6 +37,25 @@
     $(document).ready(async function () {
         const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-diet-plan/data");
     });
-</script>
 
+    document.getElementById('download-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    });
+
+    document.getElementById('download-button').addEventListener('click', function() {
+    const doc = new jsPDF();
+    let user = '<%- locals.user %>';
+    let initialDiv = document.getElementById("container-plans");
+    var div = initialDiv.cloneNode(true);
+    var formElement = div.querySelector('form');
+    div.removeChild(formElement);
+    formElement = div.querySelector('form');
+    div.removeChild(formElement);
+    doc.fromHTML(`<html><head><title>${"DTPlan"}</title></head><body>` + div.innerHTML + `</body></html>`);
+
+    doc.save('DTPlan - Diet plan for ' + user);
+  });
+    
+</script>
 </html>
