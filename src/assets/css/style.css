@@ -592,12 +592,21 @@ form.dashboard-form button[type="submit"]:hover {
 
 .plan-discard-button {
     color: #FF0000 !important;
+    background-color: #FFFFFF !important;
     border-color: #FF0000 !important;
 }
 
 .plan-discard-button:hover {
     color: #FFFFFF !important;
     background-color: #FF0000 !important;
+}
+
+.plan-download-button {
+    background-color: #FFFFFF !important;
+}
+
+.plan-download-button:hover {
+    background-color: #16ADD8 !important;
 }
 
 textarea {
