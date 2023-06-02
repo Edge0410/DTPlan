@@ -19,7 +19,7 @@ utilizatori
 - [x] Analiza asupra tipologiilor umane si a stilurilor de viata si mentinerea unor date/statistici coerente importante pentru
 programator -> se vor sintetiza si se vor crea planuri 
 
-- [x] Implementarea unui carusel pentru prezentarea planurilor salvate de utilizator intr-un mod inedit folosind [Swiper.js](https//:swiperjs.com)
+- [x] Implementarea unui carusel pentru prezentarea planurilor salvate de utilizator intr-un mod inedit folosind [Swiper.js](https://swiperjs.com)
 
 - [x] Algoritm care sa aleaga pe baza unor inputuri (caracteristici useri) planurile relevante + alternative
 
