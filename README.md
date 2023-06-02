@@ -19,11 +19,11 @@ utilizatori
 - [x] Analiza asupra tipologiilor umane si a stilurilor de viata si mentinerea unor date/statistici coerente importante pentru
 programator -> se vor sintetiza si se vor crea planuri 
 
-- [x] Implementarea unui carusel pentru prezentarea planurilor salvate de utilizator intr-un mod inedit folosind [Swiper.js](swiperjs.com)
+- [x] Implementarea unui carusel pentru prezentarea planurilor salvate de utilizator intr-un mod inedit folosind [Swiper.js](https//:swiperjs.com)
 
 - [x] Algoritm care sa aleaga pe baza unor inputuri (caracteristici useri) planurile relevante + alternative
 
-- [x] Implementarea unei interfete vizuale concisa si profesionala folosind [Figma](figma.com). Proiectarea acesteia se poate vedea [aici](https://github.com/Edge0410/DTPlan/blob/main/Interface%20Design.pdf)
+- [x] Implementarea unei interfete vizuale concisa si profesionala folosind [Figma](https://figma.com). Proiectarea acesteia se poate vedea [aici](https://github.com/Edge0410/DTPlan/blob/main/Interface%20Design.pdf)
 
 Features:
 
