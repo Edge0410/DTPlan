@@ -743,9 +743,6 @@ app.post("/create-plan", async function (req, res) {
                         });
                     });
                 };
-                        });
-                    });
-                };
 
                 if(goal == 0)
                         {
