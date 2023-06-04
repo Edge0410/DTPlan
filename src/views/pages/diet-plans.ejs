@@ -12,21 +12,22 @@
         </header>
 
         <main>
-            <div class="centered">
-                <h1 class="centered" style="font-family: rubik; background-image: url(/assets/images/diet-plan-container-fill.png); color: white; font-weight: bold;">Your diet plans</h1><br>
-                <h6 class="centered" style="font-family: rubik; font-weight: bold; color: gray;">Use the <span style="color: blue">blue arrows</span> or slide to browse your saved diet plans</h6>
-            </div>
-            <div class="swiper-outer-container">
-                <div class="swiper-container">
-                <div class = "swiper-wrapper">
-                
+            <div id="container-plans">
+                <!-- <h1 class="centered" style="font-family: rubik; background-image: url(/assets/images/diet-plan-container-fill.png); color: white; font-weight: bold;">Your diet plans</h1><br> -->
+                <!-- <h6 class="centered" style="font-family: rubik; font-weight: bold; color: gray;">Use the <span style="color: blue">blue arrows</span> or slide to browse your saved diet plans</h6> -->
+                <h2>My diet plans</h2>
+                <div class="swiper-outer-container">
+                    <div class="swiper-container">
+                        <div class = "swiper-wrapper">
+                        
+                        </div>
+                        <div class = "swiper-pagination"></div>
+                        <div class = "swiper-button-prev"></div>
+                        <div class = "swiper-button-next"></div>
+                    </div>
                 </div>
-                <div class = "swiper-pagination"></div>
-                <div class = "swiper-button-prev"></div>
-                <div class = "swiper-button-next"></div>
-                </div>
+                <a href="/create-diet-plan" class="centered dashboard-button" style="width: 318px;">Create new plan</a>
             </div>
-            
         </main>
 
         <footer>
@@ -35,10 +36,8 @@
     </body>
 
     <script>
-
-
-$(document).ready(async function () {
-        const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-dplans");
+    $(document).ready(async function () {
+            const retrieve_bal = await fetchPlans("http://localhost:8888/fetch-dplans", 0);
     });
     </script>
 </html>

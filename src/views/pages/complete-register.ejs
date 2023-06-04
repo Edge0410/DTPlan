@@ -6,40 +6,60 @@
     </head>
 
     <body>
-        <header>
-            <%- include("../page_fragments/header.ejs") %>
-        </header>
-
         <main>
-            <h3 class="centered">Register</h3>
+            <!-- <h3 class="centered">Register</h3> -->
             <div class="centered">
+                <h1><a href="../index" style="text-decoration: none;">DTPlan</a></h1>
+                <h5 class="centered" style="margin-top: 8px; color: #777777;">Welcome, <%- locals.user %>! Complete the registration process now.</h5>
                 <form method="post" action="/complete-register">
                     <label>
-                        <h5 class="centered">Inaltime (in cm)</h5>
-                        <input type="number" name="height" value="170" required/>
+                        <!-- <h5 class="centered">Inaltime (in cm)</h5> -->
+                        <input type="number" name="height" placeholder="Height (in cm)" required/> <!--value="170"-->
                     </label>
                     <br/>
                     <label>
-                        <h5 class="centered">Greutate (in Kg)</h5>
-                        <input type="number" name="weight" value="65" required/>
+                        <!-- <h5 class="centered">Greutate (in Kg)</h5> -->
+                        <input type="number" name="weight" placeholder="Weight (in kg)" required/> <!--value="65" -->
                     </label>
                     <br/> 
                     <label>
-                        <br/>
-                        <label for="gender"> <h5 class="centered">Gender:</h5> </label>
-                            <select name="gender">
-                                <option value="male" selected>Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                        <!-- <br/> -->
+                        <!-- <label for="gender"> <h5 class="centered">Gender:</h5> </label> -->
+                        <select name="gender">
+                            <option value="" disabled selected>Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
                     </label>
                     <br/>
+                    <!-- <br/> -->
+                    <label>
+                        <!-- <h5 class="centered">Date of birth:</h5> -->
+                        <input type="text" name="birthday" placeholder="Date of Birth" onfocus="(this.type='date')" onblur="(this.type='text')"> <!--value="2002-10-05"-->
+                    </label>
                     <br/>
                     <label>
-                        <h5 class="centered">Date of birth:</h5>
-                        <input type="date" name="birthday" value="2002-10-05"> 
-                        <label>
+                        <select name="activity_level">
+                            <option value="" disabled selected>How active are you?</option>
+                            <option value="0">I am a sedentary person and I rarely go for walks</option>
+                            <option value="1">Sometimes I enjoy walks but I am not really into sports</option>
+                            <option value="2">I love playing sports but I am a bit out of shape</option>
+                            <option value="3">I always make time for gym and I am actively involved into the sport life</option>  
+                        </select>
+                    </label>
+                    <label>
+                        <select name="goal">
+                            <option value="" disabled selected>Goal</option>
+                            <option value="weight">Lose weight</option>
+                            <option value="muscle">Build muscle</option>
+                        </select>
+                    </label>
                     <br/>
-                    <button type="submit" value="submit">Update profile</button>
+                    <label>
+                        <input type="number" name="weight_goal" placeholder="Weight goal (in kg)" required/>
+                    </label>
+                    <br/>
+                    <button type="submit" value="submit">Complete registration</button>
                 </form>
             </div>
         </main>

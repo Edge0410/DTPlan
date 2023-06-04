@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <%- include("../page_fragments/head.ejs") %>
+    </head>
+
+    <body>
+        <header>
+            <%- include("../page_fragments/header.ejs") %>
+        </header>
+
+        <main>
+            <div id="container-dashboard-form">
+                <h2>My details</h2>
+                <form method="post" action="/save-updated-details" class="centered dashboard-form">
+                    <label>
+                        <!-- <h5 class="centered">Username</h5> -->
+                        <!-- <i class="fa-solid fa-user"></i> -->
+                        <input type="text" name="username" placeholder="Username" value="<%= locals.user ? user: '' %>" maxlength="15" required/>
+                    </label>
+                    <br/>
+                    <label>
+                        <!-- <h5 class="centered">Inaltime (in cm)</h5> -->
+                        <input type="number" name="height" placeholder="Height (in cm)" value="<%= locals.user_data.height ? user_data.height: '' %>" required/> <!--value="170"-->
+                    </label>
+                    <br/>
+                    <label>
+                        <!-- <h5 class="centered">Greutate (in Kg)</h5> -->
+                        <input type="number" name="weight" placeholder="Weight (in kg)" value="<%= locals.user_data.weight ? user_data.weight: '' %>" required/> <!--value="65" -->
+                    </label>
+                    <br/> 
+                    <label>
+                        <!-- <br/> -->
+                        <!-- <label for="gender"> <h5 class="centered">Gender:</h5> </label> -->
+                        <select name="gender">
+                            <option value="" disabled <%= locals.user_data.gender == null ? 'selected': '' %>>Gender</option>
+                            <option value="male" <%= locals.user_data.gender == 1 ? 'selected': '' %>>Male</option>
+                            <option value="female" <%= locals.user_data.gender == 0 ? 'selected': '' %>>Female</option>
+                        </select>
+                    </label>    
+                    <br/>
+                    <!-- <br/> -->
+                    <label>
+                        <!-- <h5 class="centered">Date of birth:</h5> -->
+                        <input type="text" name="birthday" placeholder="Date of Birth" value="<%= locals.user_data.birth_date ? user_data.birth_date: '' %>" onfocus="(this.type='date')" onblur="(this.type='text')"> <!--value="2002-10-05"-->
+                    </label>
+                    <br/>
+                    <a href="/index" class="form-cancel-button">Cancel</a>
+                    <button type="submit" value="submit">Update profile</button>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <%- include("../page_fragments/footer.ejs") %>
+        </footer>
+    </body>
+</html>

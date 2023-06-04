@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <%- include("../page_fragments/head.ejs") %>
+    </head>
+
+    <body>
+        <header>
+            <%- include("../page_fragments/header.ejs") %>
+        </header>
+
+        <main>
+            <div id="container-dashboard-form">
+                <h2>My goals</h2>
+                <form method="post" action="/save-updated-goals" class="centered dashboard-form">
+                    <label>
+                        <!-- <br/> -->
+                        <!-- <label for="gender"> <h5 class="centered">Gender:</h5> </label> -->
+                        <select name="goal">
+                            <option value="" disabled <%= locals.user_data.goal == null ? 'selected': '' %>>Goal</option>
+                            <option value="weight" <%= locals.user_data.goal == 0 ? 'selected': '' %>>Lose weight</option>
+                            <option value="muscle" <%= locals.user_data.goal == 1 ? 'selected': '' %>>Build muscle</option>
+                        </select>
+                    </label>
+                    <br/>
+                    <label>
+                        <!-- <h5 class="centered">Greutate (in Kg)</h5> -->
+                        <input type="number" name="weight_goal" placeholder="Weight (in kg)" value="<%= locals.user_data.weight_goal ? user_data.weight_goal: '' %>" required/> <!--value="65" -->
+                    </label>
+                    <br/> 
+                    <a href="/index" class="form-cancel-button">Cancel</a>
+                    <button type="submit" value="submit">Update goals</button>
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <%- include("../page_fragments/footer.ejs") %>
+        </footer>
+    </body>
+</html>
