@@ -100,7 +100,13 @@ function fetchPlanContent(route) {
                     let container = document.getElementsByClassName("container")[0];
                     console.log(res.records.length);//1
                     if (res.type == 0) { // diet plan
+                        let step = res.records.length / 7; // 5
                         for (let i = 0; i < res.records.length; i++) {
+                            if(i % step == 0){
+                                let childTit = document.createElement('h3');
+                                childTit.innerHTML = "Ziua " + (i/step + 1);
+                                container.appendChild(childTit);
+                            }
                             let planChild = document.createElement('div');
                             planChild.classList.add("diet-data");
                             let childTitle = document.createElement('h3');

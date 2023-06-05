@@ -1,3 +1,5 @@
+// toate modulele folosite importate
+
 const express = require('express');
 const fs = require('fs');
 const crypto = require('crypto');
@@ -5,20 +7,24 @@ const cors = require('cors')
 const session = require('express-session');
 const url = require('url');
 const moment = require('moment/moment');
-
 var database = require('./database');
 const { parse } = require('path');
 
+// rulam aplicatia
 app = express();
-app.set("view engine", "ejs");
 
+// setam calea default pentru assets (CSS/JS/Imagini etc.) si link catre modulul EJS
+app.set("view engine", "ejs");
 app.use("/assets", express.static(__dirname + "/assets"));
 
+// activam Cross Origin Resource Sharing pentru a putea sa facem requesturi de pe alte pagini web/servere (ex. JQuery) 
 app.use(cors());
 
-app.use(express.urlencoded({ extended: true })); // creeaza req.body pentru formular ca sa nu mai fie in url parametrii din post
+// creeaza req.body pentru formular ca sa nu mai fie in url parametrii din post
+app.use(express.urlencoded({ extended: true })); 
 
-app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false })); // req.session
+// parametrii req.session encriptati
+app.use(session({ secret: 'abcdefg', resave: true, saveUninitialized: false })); 
 
 function diff_years(dateStr) {
     var date = new Date(dateStr);
