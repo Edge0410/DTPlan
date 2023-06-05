@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 
 <html>
-
-<head>
-    <%- include("../page_fragments/head.ejs") %>
+    <head>
+        <%- include("../page_fragments/head.ejs") %>
         <script src="/assets/js/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
-</head>
+    </head>
 
-<body>
-    <header>
-        <%- include("../page_fragments/header.ejs") %>
-    </header>
+    <body>
+        <header>
+            <%- include("../page_fragments/header.ejs") %>
+        </header>
 
-    <main>
-        <div id="container-plans">
-            <div class="container" style="flex-direction: column;">
+        <main>
+            <div id="container-plans">
+                <div class="container" style="flex-direction: column;">
 
+                </div>
+                
+                <form action="" class="centered dashboard-form" id="download-form">
+                    <button type="submit" name="submit" class="plan-submit-button plan-download-button" id="download-button">Download plan as PDF</button><br>
+                </form>
+                
+                <form action="/manage-workout-plan" id="manage-workout-plan" class="centered dashboard-form" method="post">
+                    <button type="submit" name="submit" value="0" class="plan-submit-button plan-discard-button" style="background-color: white;">Delete plan</button>
+                </form>
             </div>
-            
-            <form action="" class="centered dashboard-form" id="download-form">
-                <button type="submit" name="submit" class="plan-submit-button plan-download-button" id="download-button">Download plan as PDF</button><br>
-            </form>
-            
-            <form action="/manage-workout-plan" id="manage-workout-plan" class="centered dashboard-form" method="post">
-                <button type="submit" name="submit" value="0" class="plan-submit-button plan-discard-button" style="background-color: white;">Delete plan</button>
-            </form>
-        </div>
-    </main>
+        </main>
 
-    <footer>
-        <%- include("../page_fragments/footer.ejs") %>
-    </footer>
-</body>
-<script>
-    $(document).ready(async function () {
-        const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-workout-plan/data");
-    });
+        <footer>
+            <%- include("../page_fragments/footer.ejs") %>
+        </footer>
+    </body>
 
-    document.getElementById('download-form').addEventListener('submit', function(event) {
-    event.preventDefault();
+    <script>
+        $(document).ready(async function () {
+            const retrieve_bal = await fetchPlanContent("http://localhost:8888/view-workout-plan/data");
+        });
 
-    });
+        document.getElementById('download-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+        });
 
-    document.getElementById('download-button').addEventListener('click', function() {
-    const doc = new jsPDF();
-    let user = '<%- locals.user %>';
-    let initialDiv = document.getElementById("container-plans");
-    var div = initialDiv.cloneNode(true);
-    var formElement = div.querySelector('form');
-    div.removeChild(formElement);
-    formElement = div.querySelector('form');
-    div.removeChild(formElement);
-    doc.fromHTML(`<html><head><title>${"DTPlan"}</title></head><body>` + div.innerHTML + `</body></html>`);
+        document.getElementById('download-button').addEventListener('click', function() {
+            const doc = new jsPDF();
 
-    doc.save('DTPlan - Workout plan for ' + user);
-  });
-</script>
+            let user = '<%- locals.user %>';
+            let initialDiv = document.getElementById("container-plans");
+            var div = initialDiv.cloneNode(true);
+            var formElement = div.querySelector('form');
+            div.removeChild(formElement);
+            formElement = div.querySelector('form');
+            div.removeChild(formElement);
 
+            doc.fromHTML(`<html><body>` + div.innerHTML + `</body></html>`);
+
+            doc.save('DTPlan - Workout plan for ' + user);
+        });
+    </script>
 </html>

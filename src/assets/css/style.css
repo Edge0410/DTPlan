@@ -800,9 +800,9 @@ textarea {
     background-image: url(../images/data-diet3.jpg)
 }
 
-.container .diet-data:last-child {
+/* .container .diet-data:last-child {
     margin-bottom: 0px;
-}
+} */
 
 .diet-data:hover {
     /* box-shadow: 4px 4px 4px 0 gray; */
