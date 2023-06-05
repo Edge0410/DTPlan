@@ -721,82 +721,256 @@ app.post("/create-plan", async function (req, res) {
                 }
                 caloric_intake = Math.round(caloric_intake);
                 console.log("Caloric intake: " + caloric_intake);
-                query = `INSERT INTO diet_meals VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
+                //query = `INSERT INTO diet_meals VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
 
                 /* algoritm */
 
-                const getMeals = () => {
+                function shuffleArray(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                      const j = Math.floor(Math.random() * (i + 1));
+                      [array[i], array[j]] = [array[j], array[i]];
+                    }
+                    return array;
+                  }
+
+
+                const getMeals = (category) => {
                     return new Promise((resolve, reject) => {
-                        const query = "SELECT * from meals";
+                        const query = "SELECT * FROM MEALS WHERE type =" + category;
                         database.query(query, function (err, res) {
-                            if (err) reject(err);
+                            if(err) reject(err);
                             else resolve(res);
                         });
                     });
                 };
 
-
-                getMeals().then(meals => {
-                    const convenient_meals = meals.filter(meal => meal.calories <= caloric_intake);
-                    var n = convenient_meals.length;
-                    var table = Array.from(Array(n + 1), () => Array(caloric_intake + 1).fill(0));
-                    const selectedFoods = [];
-                    //selected_type = "cardio"
-
-                    if (goal == 0) {
-                        //scadem caloriile
-                        caloric_intake -= 0.10 * caloric_intake;
-
-                    }
-                    else {
-                        //modificam caloriile
-                        caloric_intake += 0.15 * caloric_intake;
-                    }
-                    caloric_intake = Math.round(caloric_intake);
-                    console.log("Caloric intake: " + caloric_intake);
-                    for (let i = 1; i <= n; i++) {
-                        const food = convenient_meals[i - 1];
-                        for (let j = 1; j <= caloric_intake; j++) {
-                            if (food.calories <= j) {
-                                const newValue = food.calories + table[i - 1][j - food.calories];
-                                if (newValue > table[i - 1][j]) {
-                                    table[i][j] = newValue;
-                                    selectedFoods[j] = [food].concat(selectedFoods[j - food.calories]);
-                                } else {
-                                    table[i][j] = table[i - 1][j];
-                                    selectedFoods[j] = selectedFoods[j] || selectedFoods[j - 1];
-                                }
-                            } else {
-                                table[i][j] = table[i - 1][j];
-                                selectedFoods[j] = selectedFoods[j] || selectedFoods[j - 1];
-                            }
+                if(goal == 0)
+                        {
+                            //scadem caloriile
+                            caloric_intake -= 0.10 * caloric_intake;
+                    
                         }
+                else{
+                    //modificam caloriile
+                    caloric_intake += 0.15 * caloric_intake;
                     }
-                    var sum = 0;
-                    for (var i = 0; i < selectedFoods[caloric_intake].length - 1; i++) {
-                        console.log(selectedFoods[caloric_intake][i].title);
-                        sum += selectedFoods[caloric_intake][i].calories;
-                    }
-                    console.log("Total calories: " + sum);
+                caloric_intake = Math.round(caloric_intake);
+                console.log("Caloric intake: " + caloric_intake);
 
-                    //Inseram mealurile in baza de date:
-                    query = "INSERT INTO diet_meals VALUES ";
-                    for (var meal of selectedFoods[caloric_intake].slice(0, -1)) {
-                        query += `(${inserted_id}, ${meal.id}), `;
-                    }
-                    query = query.substring(0, query.length - 2);
-                    query += ";";
-                    //query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
+                const getSnacks = getMeals(0);
+                const getBreakfast = getMeals(1);
+                const getLunches = getMeals(2);
+                const getDinners = getMeals(3);
+                const mealPlans = [];
+                Promise.all([getSnacks, getBreakfast, getLunches, getDinners]).then(
+                    ([snacks, breakfasts, lunches, dinners]) => {
+                        //if the number of total calories is under 2000 kcal we won't have any snack
+                        
+                        const selectMeals = (mealList, calorieLimit, numMeals) => {
+                            // Sort the meals by closest calories to the target
+                            mealList.sort((a, b) => Math.abs(a.calories - calorieLimit) - Math.abs(b.calories - calorieLimit));
+                          
+                            // Select the specified number of meals that are closest to the calorie limit
+                            return mealList.slice(0, numMeals);
+                          };
+  
 
-                    /* algoritm */
+                        if(caloric_intake < 2000)
+                        {
+                            console.log("Caloric intake less than 2000");
+                            const breakfastCalories = Math.round(caloric_intake * 0.3);
+                            const lunchCalories = Math.round(caloric_intake * 0.4);
+                            const dinnerCalories = Math.round(caloric_intake * 0.3);
 
-                    database.query(query, function (err, resq) {
-                        if (err) throw err;
-                        else {
+                            const selectedBreakfasts = selectMeals(breakfasts, breakfastCalories, 7);
+                            const selectedLunches = selectMeals(lunches, lunchCalories, 7);
+                            const selectedDinners = selectMeals(dinners, dinnerCalories, 7);
+
+                            shuffleArray(selectedBreakfasts);
+                            shuffleArray(selectedLunches);
+                            shuffleArray(selectedDinners);
+
+                            
+                            for (let i = 0; i < 7; i++) {
+                                const mealPlan = {
+                                    day: i + 1,
+                                    breakfast: selectedBreakfasts[i],
+                                    lunch: selectedLunches[i],
+                                    dinner: selectedDinners[i]
+                                };
+                            mealPlans.push(mealPlan);
+                            }
+
+                            console.log(mealPlans);
+                        
+                            //Parcurgem mealurile:
+                            for(var day of mealPlans)
+                            {
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.breakfast.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+                        
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.lunch.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.dinner.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+                            }
+                            res.redirect("/complete-create-plan");
+                        }   
+                        
+                        //if the number of total calories is between 2000 and 2500 kcal we'll have 1 snack
+                        else if(caloric_intake < 2500)
+                        {
+                            console.log("Caloric intake between 2000 and 2500kcal");
+                            const breakfastCalories = Math.round(caloric_intake * 0.3);
+                            const snackCalories = Math.round(caloric_intake * 0.1)
+                            const lunchCalories = Math.round(caloric_intake * 0.3);
+                            const dinnerCalories = Math.round(caloric_intake * 0.3);
+
+                            const selectedBreakfasts = selectMeals(breakfasts, breakfastCalories, 7);
+                            const selectedSnacks = selectMeals(snacks, snackCalories, 7);
+                            const selectedLunches = selectMeals(lunches, lunchCalories, 7);
+                            const selectedDinners = selectMeals(dinners, dinnerCalories, 7);
+                            shuffleArray(selectedBreakfasts);
+                            shuffleArray(selectedSnacks);
+                            shuffleArray(selectedLunches);
+                            shuffleArray(selectedDinners);
+
+                            for (let i = 0; i < 7; i++) {
+                                const mealPlan = {
+                                    day: i + 1,
+                                    breakfast: selectedBreakfasts[i],
+                                    snack: selectedSnacks[i],
+                                    lunch: selectedLunches[i],
+                                    dinner: selectedDinners[i]
+                                };
+                            mealPlans.push(mealPlan);
+                            }
+
+                            console.log(mealPlans);
+
+                            for(var day of mealPlans)
+                            {
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.breakfast.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.snack.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });    
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.lunch.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.dinner.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+                            }
+                            res.redirect("/complete-create-plan");
+
+                        }
+                        else{
+
+                            console.log("Caloric intake between 2000 and 2500kcal");
+                            const breakfastCalories = Math.round(caloric_intake * 0.3);
+                            const snackCalories = Math.round(caloric_intake * 0.05)
+                            const lunchCalories = Math.round(caloric_intake * 0.3);
+                            const dinnerCalories = Math.round(caloric_intake * 0.3);
+
+                            const selectedBreakfasts = selectMeals(breakfasts, breakfastCalories, 7);
+                            const selectedSnacks = selectMeals(snacks, snackCalories, 14);
+                            const selectedLunches = selectMeals(lunches, lunchCalories, 7);
+                            const selectedDinners = selectMeals(dinners, dinnerCalories, 7);
+                            shuffleArray(selectedBreakfasts);
+                            shuffleArray(selectedSnacks);
+                            shuffleArray(selectedLunches);
+                            shuffleArray(selectedDinners);
+
+                            for (let i = 0; i < 7; i++) {
+                                const mealPlan = {
+                                    day: i + 1,
+                                    breakfast: selectedBreakfasts[i],
+                                    snack1: selectedSnacks[i],
+                                    lunch: selectedLunches[i],
+                                    dinner: selectedDinners[i],
+                                    snack2: selectedSnacks[i + 7]
+                                };
+                            mealPlans.push(mealPlan);
+                            }
+
+                            console.log(mealPlans);
+
+                            for(var day of mealPlans)
+                            {
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.breakfast.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.snack1.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });    
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.lunch.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.dinner.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+
+                                query = "INSERT INTO diet_meals VALUES ";
+                                query += `(${inserted_id}, ${day.snack2.id}), `;
+                                query = query.substring(0, query.length - 2) + ";";
+                                database.query(query, function (err, resq) {
+                                if (err) throw err;
+                                });
+                            }
                             res.redirect("/complete-create-plan");
                         }
-                    });
-                })
+                    }
+                )
             }
         });
     }
@@ -861,19 +1035,20 @@ app.post("/create-plan", async function (req, res) {
 
 
                 getExercices().then(exercises => {
-                    const muscle_exercises = exercises.filter((ex) => ex.index_resistance <= max_intensity_score).sort((a, b) => b.index_resistance - a.index_resistance);
-                    const cardio_exercises = exercises.filter((ex) => ex.index_cardio <= max_intensity_score).sort((a, b) => b.index_cardio - a.index_cardio);
-
-                    var n;
-                    var dp;
-                    //selected_type = "cardio"
-                    target_score_cardio = Math.floor(target_score_cardio * 10);
-                    target_score_muscle = Math.floor(target_score_muscle * 10);
-
-                    if (goal == 0) {
-                        n = cardio_exercises.length;
-                        const results = {};
-                        results[0] = { exercices: [], sum: 0 };
+                        const muscle_exercises = exercises.filter((ex) => ex.index_resistance <= max_intensity_score).sort((a, b) => b.index_resistance - a.index_resistance);
+                        const cardio_exercises = exercises.filter((ex) => ex.index_cardio <= max_intensity_score).sort((a, b) => b.index_cardio - a.index_cardio);
+                        const sumIndexCardio = cardio_exercises.reduce((sum, ex) => sum + ex.index_cardio, 0);
+                        console.log('Sum of index_cardio:', sumIndexCardio);
+                        target_score_cardio = Math.floor(target_score_cardio * 10);
+                        target_score_muscle = Math.floor(target_score_muscle * 10);
+                        console.log("Target score cardio: ")
+                        console.log(target_score_cardio)
+                        //selected_type = "cardio"
+                        if(goal == 0)
+                        {
+                            n = cardio_exercises.length;
+                            const results = {};
+                            results[0] = {exercices: [], sum : 0};
 
                         for (const ex of cardio_exercises) {
                             for (let i = target_score_cardio; i >= ex.index_cardio; i--) {
@@ -892,18 +1067,17 @@ app.post("/create-plan", async function (req, res) {
                             console.log(ex.index_resistance);
                         }
 
-                        //Inseram exercitiile in baza de date:
-                        query = "INSERT INTO workout_exercises VALUES ";
-                        for (ex of results[target_score_cardio].exercices) {
-                            query += `(${inserted_id}, ${ex.id}), `;
-                        }
-                        query = query.substring(0, query.length - 2);
-                        query += ";";
-                        //query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
-
-                        /* algoritm */
-
-                        database.query(query, function (err, resq) {
+                            //Inseram exercitiile in baza de date:
+                            query = "INSERT INTO workout_exercises VALUES ";
+                            for(ex of results[target_score_cardio].exercices)
+                            {
+                                query += `(${inserted_id}, ${ex.id}), `;
+                            }
+                            query = query.substring(0, query.length - 2);
+                            query += ";";                
+                            /* algoritm */
+                
+                            database.query(query, function (err, resq) {
                             if (err) throw err;
                             else {
                                 res.redirect("/complete-create-plan");
@@ -934,18 +1108,18 @@ app.post("/create-plan", async function (req, res) {
                             console.log(ex.index_resistance);
                         }
 
-                        //Inseram exercitiile in baza de date:
-                        query = "INSERT INTO workout_exercises VALUES ";
-                        for (ex of results[target_score_muscle].exercices) {
-                            query += `(${inserted_id}, ${ex.id}), `;
-                        }
-                        query = query.substring(0, query.length - 2);
-                        query += ";";
-                        //query = `INSERT INTO workout_exercises VALUES (${inserted_id}, 1), (${inserted_id}, 2), (${inserted_id}, 3)`;
-
-                        /* algoritm */
-
-                        database.query(query, function (err, resq) {
+                            //Inseram exercitiile in baza de date:
+                            query = "INSERT INTO workout_exercises VALUES ";
+                            for(ex of results[target_score_muscle].exercices)
+                            {
+                                query += `(${inserted_id}, ${ex.id}), `;
+                            }
+                            query = query.substring(0, query.length - 2);
+                            query += ";";
+                
+                            /* algoritm */
+                
+                            database.query(query, function (err, resq) {
                             if (err) throw err;
                             else {
                                 res.redirect("/complete-create-plan");
