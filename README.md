@@ -1,5 +1,7 @@
 # DTPlan
 
+### Demo proiect [aici.](https://www.youtube.com/watch?v=xDAhmn3UC-k)
+
 ### Backlog:
 
 Training Plan & Diet Creator Web App
